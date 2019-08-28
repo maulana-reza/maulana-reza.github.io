@@ -23,15 +23,18 @@ nav a{
 	color:black;
 }
 nav{
+  z-index: 1;
   margin-top: -10px;
 	font-size: 50px;
 	float: right;
 }
 div.content-home{
   height: 100%;
+  /*border:1px solid black;*/
 }
 body{
-	margin:3%
+	margin-left:3%;
+  margin-right: 3%;
 }
 body, html {
     height: 100%;
@@ -58,6 +61,8 @@ i.fab{
   font-size: 50px;
 }
 .hire a:hover{
+
+  background-image: linear-gradient(to right, #FBDBA8 , #EA8953);
   background-color: #ea8953;
   border-color: #ea8953;
   color: white;
@@ -70,8 +75,8 @@ i.fab{
   font-size: 40px;
 }
 .name{
+  z-index: -1;
   margin-top: 5px;
-  z-index: 0;
   font-size: 150px;
 }
 .image-bg {
@@ -92,8 +97,11 @@ i.fab{
 }
 #project {
   display: block;
-  width: 100%;
-  height:200%;
+  width: 94%;
+  top:165%;
+  height: 100%;
+  position: absolute;
+  /*border:1px solid black;*/
 }
 .content-skills .row{
   position:absolute;
@@ -102,6 +110,7 @@ i.fab{
     margin-left:-20px;
 }
 *::selection{
+  color:white;
   background-color: black;
 }
 .content-skills {
@@ -121,4 +130,63 @@ i.fab{
   background: url(assets/bg-skills.svg);
   background-size: 100% 120%;
 }
+.content-skills {
+  /*border: 1px solid black;*/
+  padding-bottom: 3%;
+  font-family: sans-bold;
+  font-size: 25px;
+  z-index: -1;
+  padding-right: 3%;
+  padding-left : 3%;
+  position: absolute;
+  display: block;
+  width: 100%;
+  height:100%;
+  right:0;
+  top:65%;
+  background: url(assets/bg-skills.svg);
+  background-size: 100% 103%;
+}
+.content-project .title{
+  font-family: sans-bold;
+  margin-bottom: -10px;
+  font-size: 50px;
+}
 
+.carousel-item .card-body{
+  background-color: rgba(0,0,0,0.6);
+
+  /*border:1px solid black;*/
+}
+.carousel-item .card{
+  background-size: cover;
+  height: 500px;
+
+}
+.carousel-item{
+  font-family: sans-bold;
+  color: white;
+}
+.c-gradient:hover{
+  background-color: white;
+  color: black;
+
+}
+.c-gradient{
+  border-color: #EA8953;
+  background-color: transparent;
+}
+footer{
+  display: block;
+  top:265%;
+  position: absolute;
+  /*border:1px solid black;*/
+  width: 100%;
+  right:0;
+  text-align: center;
+  color: white;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-image: linear-gradient(to right, #FBDBA8 , #EA8953) !important;
+
+}
