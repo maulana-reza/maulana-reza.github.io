@@ -217,15 +217,13 @@ footer{
   .hire a{
     color: white;
     border-color: white;
-    top: 350%;
-    position: absolute;
     width: 100px;
     font-size: 20px;
   background-image: linear-gradient(to right, #FBDBA8 , #EA8953) !important;
 
   }
   .img-mobile-char{
-    border:1px solid black;
+    /*border:1px solid black;*/
 
      position: absolute;
     display: block;
@@ -237,7 +235,7 @@ footer{
     background-size: 100% 100%;
   }
   .name{
-    
+    top: 0;
     position: relative !important;
     font-size: 50px;
   }
@@ -245,26 +243,28 @@ footer{
     padding-top: 40px;
     font-size: 20px;
   }
-  .contact-me ol li i{
-    padding-left: -20px;
-  }
   .contact-me ol li{
     border:1px solid black;
     font-size: 12px;
-     padding-top: 9px;
-  height: 45px;
-  width: 45px;
- border-radius: 100px;  
+    padding-top: 9px;
+    height: 45px;
+    width: 45px;
+    border-radius: 100px;  
   }
  
-  .navbar button span{
-    color: black;
+  .navbar button{
+    font-size: 50px;
+    color:  #EA8953 !important;
   }
   .navbar {
-    position: absolute;
-    right:0;
-    top:5%;
-
+    z-index: 10;
+    top: 0;
+    right: 0;
+    margin-top: 20px;
+    position: fixed;
+    
+  }
+  .collapse{
   }
   nav ul{
     display: none;
