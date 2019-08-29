@@ -79,16 +79,18 @@ i.fab{
   margin-top: 5px;
   font-size: 150px;
 }
-.image-bg {
-  z-index: -1;
-  position: absolute;
-  display: block;
-  width: 60%;
-  height:70%;
-  right:0;
-  top:20%;
-  background: url(assets/bg-char.svg);
-  background-size: 100% 100%;
+@media (min-width: 768px) {
+  .image-bg {
+    z-index: -1;
+    position: absolute;
+    display: block;
+    width: 60%;
+    height:70%;
+    right:0;
+    top:20%;
+    background: url(assets/bg-char.svg);
+    background-size: 100% 100%;
+  }
 }
 .content-skills .title{
   font-family: sans-bold;
@@ -163,6 +165,13 @@ i.fab{
   height: 500px;
 
 }
+.carousel-item .card-text{
+  font-size: 20px;
+  font-family: calibri;
+}
+.carousel-item .card-title{
+  font-size: 35px;
+}
 .carousel-item{
   font-family: sans-bold;
   color: white;
@@ -176,6 +185,7 @@ i.fab{
   border-color: #EA8953;
   background-color: transparent;
 }
+.carousel-control-next, .carousel-control-prev { border: 0; }
 footer{
   display: block;
   top:265%;
@@ -184,9 +194,85 @@ footer{
   width: 100%;
   right:0;
   text-align: center;
-  color: white;
   padding-top: 20px;
   padding-bottom: 20px;
   background-image: linear-gradient(to right, #FBDBA8 , #EA8953) !important;
 
+}
+@media (max-width: 768px) {
+  .image-bg {
+    z-index: -1;
+    position: absolute;
+    display: block;
+    width: 120%;
+    height:120%;
+    right:0;
+    left: -20%;
+    top: -20%;
+    background: url(assets/bg-mobile.svg) ;
+    background-size: 130% 130%;
+  }
+  .hire a{
+    color: white;
+    border-color: white;
+    top: 350%;
+    position: absolute;
+    width: 100px;
+    font-size: 20px;
+  background-image: linear-gradient(to right, #FBDBA8 , #EA8953) !important;
+
+  }
+  .img-mobile-char{
+     position: absolute;
+    display: block;
+    width: 46%;
+    height:70%;
+    right:3%;
+    top:30%;
+    background: url(assets/bg-mobile-char.svg);
+    background-size: 100% 100%;
+  }
+  .name{
+    
+    position: relative !important;
+    font-size: 50px;
+  }
+  .work{
+    padding-top: 40px;
+    font-size: 20px;
+  }
+  .contact-me ol li i{
+    padding-left: -20px;
+  }
+  .contact-me ol li{
+
+    font-size: 12px;
+     padding-top: 9px;
+  height: 45px;
+  width: 45px;
+ border-radius: 100px;  
+  }
+  .contact-me{
+    
+    top: 420%;
+    right: -90%;
+    /*border:1px solid black;*/
+    width: 130%;
+    position: absolute;
+  }
+  .navbar button span{
+    color: black;
+  }
+  .navbar {
+    position: absolute;
+    right:0;
+    top:5%;
+
+  }
+  nav ul{
+    display: none;
+  }
+  .content-skills{
+    display: none;
+  }
 }
