@@ -6,7 +6,7 @@
   font-family:sans-light ;
   src: url(assets/ostrich-sans-light.woff);
 }
-*{
+body{
 	font-family: sans-light;
 }
 nav li{
@@ -29,12 +29,13 @@ nav{
 	float: right;
 }
 div.content-home{
+  padding: 3%;
   height: 100%;
   /*border:1px solid black;*/
 }
 body{
-	margin-left:3%;
-  margin-right: 3%;
+	/*margin-left:3%;*/
+  /*margin-right: 3%;*/
 }
 body, html {
     height: 100%;
@@ -45,6 +46,7 @@ body, html {
   z-index: 2;
 }
 .contact-me ol li{
+  border:1px solid #414141;
   padding-top: 10px;
   text-align: center;
   height: 55px;
@@ -74,12 +76,10 @@ i.fab{
   border-radius: 100px;
   font-size: 40px;
 }
-.name{
-  z-index: -1;
-  margin-top: 5px;
-  font-size: 150px;
-}
 @media (min-width: 768px) {
+   nav.navbar{
+    display: none;
+  }
   .image-bg {
     z-index: -1;
     position: absolute;
@@ -91,6 +91,11 @@ i.fab{
     background: url(assets/bg-char.svg);
     background-size: 100% 100%;
   }
+  .name{
+  z-index: -1;
+  font-size: 150px;
+}
+
 }
 .content-skills .title{
   font-family: sans-bold;
@@ -98,42 +103,23 @@ i.fab{
   font-size: 50px;
 }
 #project {
+
   display: block;
-  width: 94%;
   top:165%;
   height: 100%;
   position: absolute;
-  /*border:1px solid black;*/
 }
 .content-skills .row{
   position:absolute;
   bottom: 3%;
   width: 97%;
-    margin-left:-20px;
+  margin-left:-20px;
 }
 *::selection{
   color:white;
   background-color: black;
 }
 .content-skills {
-  /*border: 1px solid black;*/
-  padding-bottom: 3%;
-  font-family: sans-bold;
-  font-size: 25px;
-  z-index: -1;
-  padding-right: 3%;
-  padding-left : 3%;
-  position: absolute;
-  display: block;
-  width: 100%;
-  height:113%;
-  right:0;
-  top:65%;
-  background: url(assets/bg-skills.svg);
-  background-size: 100% 120%;
-}
-.content-skills {
-  /*border: 1px solid black;*/
   padding-bottom: 3%;
   font-family: sans-bold;
   font-size: 25px;
@@ -147,9 +133,22 @@ i.fab{
   right:0;
   top:65%;
   background: url(assets/bg-skills.svg);
-  background-size: 100% 103%;
+  background-size: 100% 106%;
 }
-.content-project .title{
+.content-project {
+  padding-top: 3%;
+  padding-bottom: 3%;
+  font-family: sans-bold;
+  font-size: 25px;
+  z-index: -1;
+  position: absolute;
+  display: block;
+  width: 100%;
+  height:100%;
+
+}
+.content-project label{
+  padding-bottom: 3%;
   font-family: sans-bold;
   margin-bottom: -10px;
   font-size: 50px;
@@ -193,6 +192,7 @@ footer{
   /*border:1px solid black;*/
   width: 100%;
   right:0;
+  font-family: calibri !important;
   text-align: center;
   padding-top: 20px;
   padding-bottom: 20px;
@@ -200,7 +200,9 @@ footer{
 
 }
 @media (max-width: 768px) {
+
   .image-bg {
+    border:1px solid #414141;
     z-index: -1;
     position: absolute;
     display: block;
@@ -223,6 +225,8 @@ footer{
 
   }
   .img-mobile-char{
+    border:1px solid black;
+
      position: absolute;
     display: block;
     width: 46%;
@@ -245,21 +249,14 @@ footer{
     padding-left: -20px;
   }
   .contact-me ol li{
-
+    border:1px solid black;
     font-size: 12px;
      padding-top: 9px;
   height: 45px;
   width: 45px;
  border-radius: 100px;  
   }
-  .contact-me{
-    
-    top: 420%;
-    right: -90%;
-    /*border:1px solid black;*/
-    width: 130%;
-    position: absolute;
-  }
+ 
   .navbar button span{
     color: black;
   }

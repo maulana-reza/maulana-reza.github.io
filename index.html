@@ -52,18 +52,18 @@
 		</div>
 		<div class="contact-me">
 			<ol class="list-inline">
-				<li class="list-inline-item btn-outline-dark btn" onclick="github()">
+				<li class="list-inline-item " onclick="github()">
 					<i class="fab fa-2x fa-lg fa-github "></i>
 				</li>
 
-				<li class="list-inline-item btn-outline-dark btn" onclick="linkedin()">
+				<li class="list-inline-item " onclick="linkedin()">
 					<i class="fab fa-2x fa-lg fa-linkedin"></i>
 				</li>
 
-				<li class="list-inline-item btn-outline-dark btn" onclick="WhatsApp()">
+				<li class="list-inline-item " onclick="WhatsApp()">
 					<i class="fab fa-2x fa-lg fa-whatsapp"></i>
 				</li>
-				<li class="list-inline-item btn-outline-dark btn" onclick="gmail()">
+				<li class="list-inline-item " onclick="gmail()">
 					<i class="fa fa-2x fa-lg fa-envelope"></i>
 				</li>
 			</ol>
@@ -269,17 +269,11 @@
 
 </div>
 
-<div class="content-project" id="project">
-	<div class="row" style="height: 80%; ">
-	<div class="col-md-12 text-center title">
+<div class="content-project" id="project" align="center">
 	<b><label for="">PROJECT</label></b>
-	</div>
-	<div class="col-md-12" >
 		
-	 <div class="top-content">
-        	<div class="container-fluid">
-        		<div id="carousel-example" class="carousel slide" data-ride="carousel">
-        			<div class="carousel-inner row w-100 mx-auto" role="listbox" >
+        		<div id="carousel-example" class="carousel slide" data-ride="carousel" >
+        			<div class="carousel-inner row w-100 mx-auto 	" role="listbox" >
             			
 						<div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active"  >
 							<div class="card rounded" style="width: 18rem;  background-image: url(http://www.imgworlds.com/wp-content/uploads/2015/12/18-CONTACTUS-HEADER.jpg) ; ">
@@ -336,16 +330,12 @@
 						<span class="sr-only">Next</span>
 					</a>
         		</div>
-        	</div>
-        </div>
 
 
-	</div>
-	</div>
 </div>
 <footer>
 	<b>
-	© 2019 Reza Maulana All Rights Reserved
+	&copy; 2019 Reza Maulana All Rights Reserved
 	</b>
 </footer>
 </body>
@@ -423,7 +413,7 @@ $(".project").click(function() {
 	    */
 	    var $e = $(e.relatedTarget);
 	    var idx = $e.index();
-	    var itemsPerSlide = 5;
+	    var itemsPerSlide = 4;
 	    var totalItems = $('.carousel-item').length;
 	    
 	    if (idx >= totalItems-(itemsPerSlide-1)) {
