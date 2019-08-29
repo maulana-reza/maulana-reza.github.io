@@ -31,11 +31,8 @@ nav{
 div.content-home{
   padding: 3%;
   height: 100%;
-  /*border:1px solid black;*/
 }
 body{
-	/*margin-left:3%;*/
-  /*margin-right: 3%;*/
 }
 body, html {
     height: 100%;
@@ -46,7 +43,7 @@ body, html {
   z-index: 2;
 }
 .contact-me ol li{
-  border:1px solid #414141;
+  /*border:1px solid #414141;*/
   padding-top: 10px;
   text-align: center;
   height: 55px;
@@ -205,7 +202,7 @@ footer{
   }
 
   .image-bg {
-    border:1px solid #414141;
+    /*border:1px solid #414141;*/
     z-index: -1;
     position: absolute;
     display: block;
@@ -249,7 +246,7 @@ footer{
     font-size: 20px;
   }
   .contact-me ol li{
-    border:1px solid black;
+    /*border:1px solid black;*/
     font-size: 12px;
     padding-top: 9px;
     height: 45px;
@@ -274,7 +271,37 @@ footer{
   nav ul{
     display: none;
   }
-  .content-skills{
+  .content-skills .text-center b{
     display: none;
+  }
+  .content-skills .title{
+    display: block;
+    font-weight: bold;
+  }
+  
+  .content-skills{
+
+  padding-bottom: 3%;
+  font-family: sans-bold;
+  font-size: 15px;
+  z-index: -1;
+  padding-left : 7%;
+  position: absolute;
+  display: block;
+  width: 100%;
+  height:100%;
+  right:0;
+  top:65%;
+  background: url(assets/bg-mobile-skill.svg);
+  background-size: 100% 120%;
+  }
+  .progress {
+    display: -ms-flexbox;
+    display: flex;
+    height: 10px;
+    overflow: hidden;
+    font-size: .75rem;
+    background-color: #e9ecef;
+    border-radius: .25rem;
   }
 }
