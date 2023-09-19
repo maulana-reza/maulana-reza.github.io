@@ -5849,7 +5849,7 @@ html.menu-opened body {
 
 .home-three-slide {
     position: relative;
-    background-image: url(../img/slider/home-three-banner.jpg);
+    background-color: #e5eaee;
     background-repeat: no-repeat;
     background-position: right;
     background-size: cover;
