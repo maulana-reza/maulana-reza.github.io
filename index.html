@@ -19,7 +19,7 @@
             border-bottom: 1px solid black;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 768px ) {
 
             .m-auto {
                 margin: auto
@@ -62,13 +62,9 @@
         /*mobile*/
         @media (max-width: 768px) {
             .flex {
-                display: flex;
-                flex-direction: row-reverse;
             }
 
             .px-8 {
-                padding-left: 1rem;
-                padding-right: 1rem;
             }
 
             nav {
@@ -84,12 +80,12 @@
 </head>
 <body>
 <nav class="flex px-8">
-    <div class="flex-grow m-auto gachi" style="font-size: 30px">
+    <div class="flex-grow m-auto" style="font-size: 30px">
         Reza Maulana
     </div>
     <ul style="display: flex; list-style:none;margin-left: -30px;">
-        <li class="nav-item">Portfolio</li>
-        <li class="nav-item">CV</li>
+        <li class="nav-item"><a href="https://drive.google.com/file/d/154cEt1fESJDoaEdX6VqtiG0DzkatKVAs/view">Portfolio</a></li>
+        <li class="nav-item"><a href="https://drive.google.com/file/d/1HyMRhkJUaqJuGiMcYGLxuYExbYNLh38X/view">CV</a></li>
     </ul>
 </nav>
 <div class="px-8 flex" style="gap: 10px;margin-bottom: 20px;">
@@ -98,15 +94,18 @@
     <main style="border-left:0px solid black;flex-grow: 3; padding-top: 2rem;padding-bottom: 2rem;">
         <div style="height: 100%; border:0px solid black; gap:3rem;" class="flex">
             <div style="flex-grow: 3;" class="m-auto">
-                <h1 class="gachi">
+                <h1 class="">
+                    <span class="gachi" id="gachi">
                     Hi, Saya Reza Maulana
+                    </span>
+
                 </h1>
                 <p style="font-size: 15px;">
                     Saya seorang fullstack developer dari Tasikmalaya yang berfokus pada Backend Dev dan Mobile Dev.
                     Menikmati membangun semuanya dari situs app kecil hingga app yang elegan.
                     <br>
-                    <br>
                     Lihat <a href="https://drive.google.com/file/d/154cEt1fESJDoaEdX6VqtiG0DzkatKVAs/view">Portfolio Saya</a> dan juga <a href="https://drive.google.com/file/d/1HyMRhkJUaqJuGiMcYGLxuYExbYNLh38X/view">Unduh CV Saya</a>
+                    <br>
                 </p>
             </div>
             <div class="flex-grow m-auto">
@@ -121,5 +120,14 @@
         <small>© copy right 2023</small>
     </center>
 </footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.10/typed.min.js" integrity="sha512-hIlMpy2enepx9maXZF1gn0hsvPLerXoLHdb095CmRY5HG3bZfN7XPBZ14g+TUDH1aGgfLyPHmY9/zuU53smuMw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    new Typed('#gachi',{
+        strings : ['','Building web and mobile app','Hi, Saya Reza Maulana'],
+        typeSpeed : 100,
+        delaySpeed : 1000,
+        loop : true
+    });
+</script>
 </body>
 </html>
