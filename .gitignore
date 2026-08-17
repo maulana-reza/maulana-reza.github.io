@@ -1,3 +1,7 @@
 node_modules/
 .DS_Store
 /scripts/
+
+# content source contains the plaintext contact email — index.html (built output,
+# email encrypted) is what ships; keep the plaintext source local-only.
+/data/content.json
