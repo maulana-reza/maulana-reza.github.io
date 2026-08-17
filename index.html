@@ -75,11 +75,23 @@
   .table img{width:34px;height:34px;object-fit:cover;border-radius:3px;display:block}
 
   .proj-feature{display:flex;gap:1.25rem;align-items:flex-start}
-  .proj-feature img{width:200px;height:130px;object-fit:cover;border-radius:4px;border:1px solid var(--border);flex-shrink:0}
+  .proj-feature .thumb{width:200px;flex-shrink:0;border-radius:4px;border:1px solid var(--border);background:#0d0f10;overflow:hidden;cursor:zoom-in;padding:0}
+  .proj-feature .thumb img{display:block;width:100%;height:auto}
+  .proj-feature .thumb:hover{border-color:var(--amber)}
+  .proj-feature .thumb:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
   .proj-feature a{color:var(--amber);text-decoration:none}
   .proj-feature a:hover{text-decoration:underline}
-  @media (max-width:560px){.proj-feature{flex-direction:column}.proj-feature img{width:100%;height:160px}}
+  @media (max-width:560px){.proj-feature{flex-direction:column}.proj-feature .thumb{width:100%}}
   .proj-list .proj-feature + .proj-feature{margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border)}
+
+  /* ---------- lightbox ---------- */
+  .lightbox{position:fixed;inset:0;z-index:100;background:rgba(4,5,6,.92);display:flex;align-items:center;justify-content:center;padding:2.5rem 1.25rem}
+  .lightbox[hidden]{display:none}
+  .lightbox-inner{position:relative;max-width:min(1100px,92vw);max-height:88vh;display:flex;flex-direction:column;gap:.75rem}
+  .lightbox-inner img{max-width:100%;max-height:78vh;width:auto;height:auto;border-radius:6px;border:1px solid var(--border);display:block;margin:0 auto}
+  .lightbox-caption{color:var(--muted);font-size:.82rem;text-align:center}
+  .lightbox-close{position:absolute;top:-2.5rem;right:0;background:none;border:1px solid var(--border);color:var(--text);width:2.2rem;height:2.2rem;border-radius:4px;font-size:1rem;line-height:1}
+  .lightbox-close:hover{border-color:var(--amber)}
 
   .bar-row{display:flex;align-items:center;gap:.75rem;margin-top:.55rem}
   .bar-row .lbl{min-width:16ch;color:var(--muted);font-size:.82rem}
@@ -202,7 +214,9 @@
         <span class="prompt">$</span> <span class="cmd">cat personal/lokaspace.md</span>
         <div class="out">
           <div class="proj-feature">
-            <img src="assets/img/projects/lokaspace.webp" alt="Tangkapan layar Lokaspace" loading="lazy" width="200" height="130">
+            <button class="thumb" type="button" data-lightbox="assets/img/projects/lokaspace.webp" data-caption="Tangkapan layar Lokaspace">
+              <img src="assets/img/projects/lokaspace.webp" alt="Tangkapan layar Lokaspace" loading="lazy" width="1600" height="1000">
+            </button>
             <div>
               <div><span class="k">peran</span><span class="v">Co-Founder, sejak awal</span></div>
               <p>Ikut membangun Lokaspace sejak awal sebagai co-founder.</p>
@@ -217,7 +231,9 @@
         <div class="out">
           <div class="proj-list">
             <div class="proj-feature">
-              <img src="assets/img/projects/admisi.webp" alt="Tangkapan layar Admisi UNSIL" loading="lazy" width="200" height="130">
+              <button class="thumb" type="button" data-lightbox="assets/img/projects/admisi.webp" data-caption="Tangkapan layar Admisi UNSIL">
+                <img src="assets/img/projects/admisi.webp" alt="Tangkapan layar Admisi UNSIL" loading="lazy" width="1600" height="1000">
+              </button>
               <div>
                 <div><span class="k">klien</span><span class="v">Universitas Siliwangi</span></div>
                 <p>Sistem pendaftaran mahasiswa baru, dari registrasi sampai pengumuman kelulusan.</p>
@@ -225,7 +241,9 @@
               </div>
             </div>
             <div class="proj-feature">
-              <img src="assets/img/projects/sidata.webp" alt="Tangkapan layar SIData UNSIL" loading="lazy" width="200" height="130">
+              <button class="thumb" type="button" data-lightbox="assets/img/projects/sidata.webp" data-caption="Tangkapan layar SIData UNSIL">
+                <img src="assets/img/projects/sidata.webp" alt="Tangkapan layar SIData UNSIL" loading="lazy" width="1600" height="1000">
+              </button>
               <div>
                 <div><span class="k">klien</span><span class="v">Universitas Siliwangi</span></div>
                 <p>Manajemen kuota dan daya tampung mahasiswa baru lintas program studi dan fakultas.</p>
@@ -233,7 +251,9 @@
               </div>
             </div>
             <div class="proj-feature">
-              <img src="assets/img/projects/siukt.webp" alt="Tangkapan layar SIUKT UNSIL" loading="lazy" width="200" height="130">
+              <button class="thumb" type="button" data-lightbox="assets/img/projects/siukt.webp" data-caption="Tangkapan layar SIUKT UNSIL">
+                <img src="assets/img/projects/siukt.webp" alt="Tangkapan layar SIUKT UNSIL" loading="lazy" width="1600" height="1000">
+              </button>
               <div>
                 <div><span class="k">klien</span><span class="v">Universitas Siliwangi</span></div>
                 <p>Layanan pengajuan dan penyesuaian kategori UKT untuk mahasiswa aktif.</p>
@@ -241,7 +261,9 @@
               </div>
             </div>
             <div class="proj-feature">
-              <img src="assets/img/projects/rusunawa.webp" alt="Tangkapan layar Rusunawa UNSIL" loading="lazy" width="200" height="130">
+              <button class="thumb" type="button" data-lightbox="assets/img/projects/rusunawa.webp" data-caption="Tangkapan layar Rusunawa UNSIL">
+                <img src="assets/img/projects/rusunawa.webp" alt="Tangkapan layar Rusunawa UNSIL" loading="lazy" width="1600" height="1000">
+              </button>
               <div>
                 <div><span class="k">klien</span><span class="v">Universitas Siliwangi</span></div>
                 <p>Cek ketersediaan kamar dan pendaftaran hunian mahasiswa lewat satu akun.</p>
@@ -289,8 +311,16 @@
 
 <footer><p>© 2026 Reza Maulana — <a href="#home" style="color:var(--muted)">kembali ke atas ↑</a></p></footer>
 
+<div class="lightbox" id="lightbox" hidden>
+  <div class="lightbox-inner">
+    <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Tutup">✕</button>
+    <img id="lightboxImg" src="" alt="">
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
+</div>
+
 <script>
-window.EMAIL_ENC = { key: '6Cf/8Nkfh37fI4GQocFldmDd4HZpZoIgIBUdL4PdYfw=', iv: 'B3p08LYoUfklYbdB', data: 'yxAd01+hl940zfsdAvkW7m5QxSrbfyfKSljIW3MwhpB9pl/VYQ==' };
+window.EMAIL_ENC = { key: 'AD6cW7m3GztRzDIOr1xgWS85hG9XtFvBcpLHSOnKPwY=', iv: 'aHfqkLyNVwRUxIlv', data: 'tg0zwMUAsf6GsWJyzMX+s0/uj6WmXFIan5iHjh/sYtwHvZ4PYw==' };
 (function(){
   /* nav toggle (mobile) */
   var navToggle = document.getElementById('navToggle');
@@ -483,6 +513,41 @@ window.EMAIL_ENC = { key: '6Cf/8Nkfh37fI4GQocFldmDd4HZpZoIgIBUdL4PdYfw=', iv: 'B
     } else {
       startRace();
     }
+  });
+
+  /* ---------------- project screenshot lightbox ---------------- */
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  var lightboxCaption = document.getElementById('lightboxCaption');
+  var lightboxClose = document.getElementById('lightboxClose');
+  var lastFocused = null;
+
+  function openLightbox(src, caption, trigger){
+    lightboxImg.src = src;
+    lightboxImg.alt = caption;
+    lightboxCaption.textContent = caption;
+    lightbox.hidden = false;
+    lastFocused = trigger;
+    lightboxClose.focus();
+    document.addEventListener('keydown', onLightboxKeydown);
+  }
+  function closeLightbox(){
+    lightbox.hidden = true;
+    lightboxImg.src = '';
+    document.removeEventListener('keydown', onLightboxKeydown);
+    if(lastFocused) lastFocused.focus();
+  }
+  function onLightboxKeydown(e){
+    if(e.key === 'Escape') closeLightbox();
+  }
+  document.querySelectorAll('.thumb[data-lightbox]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      openLightbox(btn.dataset.lightbox, btn.dataset.caption, btn);
+    });
+  });
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function(e){
+    if(e.target === lightbox) closeLightbox();
   });
 
   /* ---------------- reveal encrypted contact email ---------------- */

@@ -68,7 +68,9 @@ function projFeature(p, indent) {
   const pad = ' '.repeat(indent);
   return [
     `${pad}<div class="proj-feature">`,
-    `${pad}  <img src="${esc(p.img)}" alt="${esc(p.alt)}" loading="lazy" width="200" height="130">`,
+    `${pad}  <button class="thumb" type="button" data-lightbox="${esc(p.img)}" data-caption="${esc(p.alt)}">`,
+    `${pad}    <img src="${esc(p.img)}" alt="${esc(p.alt)}" loading="lazy" width="1600" height="1000">`,
+    `${pad}  </button>`,
     `${pad}  <div>`,
     `${pad}    <div><span class="k">${esc(p.roleLabel)}</span><span class="v">${esc(p.roleValue)}</span></div>`,
     `${pad}    <p>${esc(p.desc)}</p>`,
