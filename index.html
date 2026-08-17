@@ -1,133 +1,689 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>REZA MAULANA</title>
-    <style>
-        /*other*/
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reza Maulana — Fullstack Developer</title>
+<meta name="description" content="Reza Maulana, fullstack developer di Tasikmalaya yang fokus pada backend development dan aplikasi mobile.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0d12;
+    --surface:#12151c;
+    --surface-2:#191d26;
+    --border:#262b36;
+    --border-soft:#1c202a;
+    --accent:#5b6ef5;
+    --accent-soft:#5b6ef533;
+    --success:#34d399;
+    --danger:#f87171;
+    --text:#e7e9ef;
+    --muted:#8890a0;
+    --muted-2:#5c6373;
+    --mono:"JetBrains Mono","Cascadia Mono",Consolas,"SFMono-Regular",monospace;
+    --sans:"Plus Jakarta Sans","Segoe UI",system-ui,-apple-system,sans-serif;
 
-        body{
-            background: #191919;
-        }
-        *{
-            color: white;
-            padding: 0;
-            margin: 0;
-            font-family: Cutive Mono, monospace;
-        }
-        .nav-item:hover {
-            border-bottom: 1px solid black;
-        }
+    /* type scale — every size on the page maps to one of these */
+    --fs-3xs:.68rem;   /* heatmap cells, track slots */
+    --fs-2xs:.72rem;   /* eyebrows, stat labels, card index numbers */
+    --fs-xs:.8rem;     /* nav links, buttons, chips, meta labels */
+    --fs-sm:.88rem;    /* card body copy */
+    --fs-base:.95rem;  /* section intros, hero tagline base */
+    --fs-md:1.05rem;   /* card headings */
+    --fs-lg:1.4rem;    /* stat numbers */
+    --fs-xl:clamp(1.5rem,3vw,2rem);      /* section headings */
+    --fs-2xl:clamp(1.6rem,3.5vw,2.2rem); /* contact heading */
+    --fs-3xl:clamp(2.2rem,6vw,3.6rem);   /* hero heading */
+    --fs-tagline:clamp(1rem,2vw,1.2rem); /* hero tagline, its own responsive range */
+    --fs-data:.62rem;  /* heatmap month/day labels — constrained to fit the 12px cell grid */
 
-        @media (min-width: 768px ) {
+    --fw-regular:400;
+    --fw-medium:500;
+    --fw-semibold:600;
+    --fw-bold:700;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  }
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:var(--sans);-webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  img{max-width:100%;display:block}
+  a{color:inherit}
+  h1,h2,h3{text-wrap:balance;margin:0;font-family:var(--mono)}
+  p{margin:0}
+  ul{margin:0;padding:0;list-style:none}
+  button{font:inherit;cursor:pointer}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .wrap{max-width:1080px;margin:0 auto;padding-left:1.5rem;padding-right:1.5rem}
+  section{padding:clamp(3.5rem,7vw,6rem) 0}
+  .eyebrow{
+    font-family:var(--mono);font-size:var(--fs-2xs);letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);font-weight:var(--fw-semibold);
+  }
+  .section-head{margin-bottom:2.5rem;max-width:60ch}
+  .section-head h2{font-size:var(--fs-xl);margin-top:.6rem;font-weight:var(--fw-semibold)}
+  .section-head .sub{color:var(--muted);margin-top:.75rem;font-size:var(--fs-base);line-height:1.7}
 
-            .m-auto {
-                margin: auto
-            }
+  /* corner-bracket hover motif — shared signature across cards */
+  .bracket-card{position:relative;border:1px solid var(--border);background:var(--surface);}
+  .bracket-card::before,.bracket-card::after{
+    content:"";position:absolute;width:14px;height:14px;
+    border:2px solid var(--accent);opacity:0;transition:opacity .2s ease, transform .2s ease;
+    pointer-events:none;
+  }
+  .bracket-card::before{top:-1px;left:-1px;border-right:none;border-bottom:none;transform:translate(4px,4px)}
+  .bracket-card::after{bottom:-1px;right:-1px;border-left:none;border-top:none;transform:translate(-4px,-4px)}
+  .bracket-card:hover::before,.bracket-card:focus-within::before{opacity:1;transform:translate(0,0)}
+  .bracket-card:hover::after,.bracket-card:focus-within::after{opacity:1;transform:translate(0,0)}
 
-            .nav-item {
-                padding: 20px;
-                cursor: pointer;
-            }
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease, transform .5s ease}
+  .reveal.in-view{opacity:1;transform:translateY(0)}
 
-            nav {
-                font-size: 20px;
-            }
+  /* ---------- nav ---------- */
+  header{
+    position:sticky;top:0;z-index:40;
+    background:rgba(11,13,18,.88);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border-soft);
+  }
+  nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;max-width:1080px;margin:0 auto}
+  nav .brand{font-family:var(--mono);font-weight:var(--fw-semibold);font-size:var(--fs-base);text-decoration:none}
+  nav .brand .dot{color:var(--accent)}
+  nav ul{display:flex;gap:1.6rem}
+  nav a.navlink{font-size:var(--fs-xs);color:var(--muted);text-decoration:none;transition:color .15s ease}
+  nav a.navlink:hover{color:var(--text)}
+  .navtoggle{display:none;background:none;border:1px solid var(--border);color:var(--text);padding:.4rem .6rem;border-radius:4px}
+  @media (max-width:760px){
+    nav ul{position:absolute;top:100%;left:0;right:0;background:var(--surface);border-bottom:1px solid var(--border);
+      flex-direction:column;padding:1rem 1.5rem;gap:1rem;display:none}
+    nav ul.open{display:flex}
+    .navtoggle{display:block}
+  }
 
-            .flex {
-                display: flex;
-            }
+  /* ---------- hero ---------- */
+  .hero{padding:clamp(3.5rem,9vw,6.5rem) 0 2.5rem}
+  .hero h1{font-size:var(--fs-3xl);font-weight:var(--fw-bold);letter-spacing:-.01em}
+  .hero .tagline{
+    margin-top:1.1rem;font-size:var(--fs-tagline);color:var(--text);
+    max-width:52ch;line-height:1.6;
+  }
+  .hero .locale{margin-top:.9rem;color:var(--muted);font-size:var(--fs-sm);font-family:var(--mono)}
+  .hero .locale::before{content:"◍ ";color:var(--success)}
+  .cta-row{display:flex;gap:.85rem;margin-top:2rem;flex-wrap:wrap}
+  .btn{
+    font-family:var(--mono);font-size:var(--fs-xs);padding:.7rem 1.3rem;border-radius:4px;
+    text-decoration:none;border:1px solid var(--border);color:var(--text);
+    transition:border-color .15s ease, background .15s ease;display:inline-block;
+  }
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:var(--fw-semibold)}
+  .btn.primary:hover{background:#4a5ce0}
+  .btn:not(.primary):hover{border-color:var(--accent)}
 
-            .flex-grow {
-                flex-grow: 1;
-            }
+  .cap-strip{margin-top:2.75rem}
+  .cap-strip .label{font-size:var(--fs-2xs);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);font-family:var(--mono)}
+  .cap-strip ul{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.85rem}
+  .cap-strip li{
+    font-family:var(--mono);font-size:var(--fs-xs);padding:.45rem .85rem;
+    border:1px solid var(--border);border-radius:999px;color:var(--muted);
+  }
 
-            .px-8 {
-                padding-left: 15rem;
-                padding-right: 15rem;
-            }
+  /* ---------- what-i-do ---------- */
+  .do-grid{display:grid;grid-template-columns:1fr;gap:1.1rem}
+  @media(min-width:720px){.do-grid{grid-template-columns:repeat(3,1fr)}}
+  .do-card{padding:1.6rem}
+  .do-card .num{font-family:var(--mono);font-size:var(--fs-2xs);color:var(--accent);font-weight:var(--fw-semibold)}
+  .do-card h3{font-size:var(--fs-md);margin-top:.9rem;font-weight:var(--fw-semibold)}
+  .do-card p{color:var(--muted);font-size:var(--fs-sm);line-height:1.7;margin-top:.65rem}
 
-            nav {
-                border-bottom: 2px dashed white;
-            }
+  /* ---------- skills ---------- */
+  .skill-group{margin-top:1.75rem}
+  .skill-group:first-child{margin-top:0}
+  .skill-group h3{font-size:var(--fs-xs);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2);font-weight:var(--fw-semibold)}
+  .skill-group ul{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:.85rem}
+  .skill-group li{
+    font-family:var(--mono);font-size:var(--fs-xs);padding:.5rem .9rem;
+    background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:4px;
+  }
 
-            .gachi {
-                margin-bottom: 1rem;
-            }
-            p{
-                font-size: 12px;
-            }
-        }
+  /* ---------- github heatmap ---------- */
+  .gh-card{padding:1.5rem clamp(1rem,3vw,1.75rem)}
+  .gh-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.75rem}
+  .gh-head a{font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted);text-decoration:none}
+  .gh-head a:hover{color:var(--accent)}
+  .gh-stats{display:flex;gap:1.75rem;margin-top:1rem;flex-wrap:wrap}
+  .gh-stat .n{font-family:var(--mono);font-size:var(--fs-lg);font-weight:var(--fw-bold);color:var(--text);font-variant-numeric:tabular-nums}
+  .gh-stat .l{font-size:var(--fs-2xs);color:var(--muted-2);letter-spacing:.05em;text-transform:uppercase}
+  .gh-scroll{overflow-x:auto;margin-top:1.5rem;padding-bottom:.5rem}
+  .gh-grid-wrap{display:inline-flex;gap:.5rem;min-width:100%}
+  .gh-daylabels{display:grid;grid-template-rows:repeat(7,1fr);gap:3px;font-family:var(--mono);font-size:var(--fs-data);color:var(--muted-2);padding-top:18px}
+  .gh-daylabels span{height:12px;line-height:12px}
+  .gh-main{display:flex;flex-direction:column}
+  .gh-months{display:grid;gap:3px;font-family:var(--mono);font-size:var(--fs-data);color:var(--muted-2);height:14px;margin-bottom:4px}
+  .gh-cells{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,1fr);gap:3px}
+  .gh-cell{width:12px;height:12px;border-radius:2px;background:var(--surface-2)}
+  .gh-legend{display:flex;align-items:center;gap:.4rem;margin-top:1rem;font-size:var(--fs-3xs);color:var(--muted-2);font-family:var(--mono)}
+  .gh-legend .gh-cell{width:10px;height:10px}
+  .gh-status{color:var(--muted);font-size:var(--fs-sm);margin-top:1rem;font-family:var(--mono)}
 
-        /*mobile*/
-        @media (max-width: 768px) {
-            .flex {
-            }
+  /* ---------- projects ---------- */
+  .proj-tabs{display:flex;gap:.6rem;margin-bottom:1.5rem}
+  .proj-tabs button{
+    font-family:var(--mono);font-size:var(--fs-xs);padding:.55rem 1.1rem;border-radius:999px;
+    border:1px solid var(--border);background:transparent;color:var(--muted);
+  }
+  .proj-tabs button[aria-pressed="true"]{background:var(--text);color:var(--bg);border-color:var(--text);font-weight:var(--fw-semibold)}
+  .proj-panel{display:none}
+  .proj-panel.active{display:block}
+  .proj-grid{display:grid;grid-template-columns:1fr;gap:1.1rem}
+  @media(min-width:720px){.proj-grid{grid-template-columns:1fr 1fr}}
+  .proj-card{padding:0;display:flex;flex-direction:column}
+  .proj-thumb{aspect-ratio:16/10;overflow:hidden;background:var(--surface-2);border-bottom:1px solid var(--border)}
+  .proj-thumb img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+  .proj-card-body{padding:1.5rem;flex:1;display:flex;flex-direction:column}
+  .proj-card .kind{font-family:var(--mono);font-size:var(--fs-3xs);color:var(--accent);letter-spacing:.06em;text-transform:uppercase;font-weight:var(--fw-semibold)}
+  .proj-card h3{font-size:var(--fs-md);margin-top:.7rem;font-weight:var(--fw-semibold)}
+  .proj-card p{color:var(--muted);font-size:var(--fs-sm);line-height:1.65;margin-top:.6rem}
+  .proj-card ul.tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1rem}
+  .proj-card ul.tags li{font-family:var(--mono);font-size:var(--fs-3xs);color:var(--muted);border:1px solid var(--border);border-radius:3px;padding:.2rem .5rem}
+  .proj-card .links{margin-top:auto;padding-top:1.1rem;display:flex;flex-wrap:wrap;gap:.9rem 1.1rem;font-family:var(--mono);font-size:var(--fs-xs)}
+  .proj-card .links a{color:var(--accent);text-decoration:none}
+  .proj-card .links a:hover{text-decoration:underline}
 
-            .px-8 {
-            }
+  /* ---------- puzzle ---------- */
+  .puzzle-card{padding:clamp(1.25rem,4vw,2rem)}
+  .puzzle-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem}
+  .puzzle-meta{display:flex;gap:1.5rem;font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted)}
+  .puzzle-meta b{color:var(--text);font-variant-numeric:tabular-nums}
+  .puzzle-track{
+    display:flex;justify-content:space-between;align-items:center;gap:.4rem;
+    margin-top:2rem;padding:1rem;background:var(--surface-2);border-radius:6px;
+    overflow-x:auto;
+  }
+  .track-slot{
+    flex:1;min-width:78px;text-align:center;font-family:var(--mono);font-size:var(--fs-3xs);
+    color:var(--muted-2);border:1px dashed var(--border);border-radius:4px;padding:.6rem .3rem;
+    transition:all .25s ease;white-space:nowrap;
+  }
+  .track-slot.filled{border-style:solid;border-color:var(--success);color:var(--success);background:#34d39914}
+  .track-arrow{color:var(--muted-2);font-family:var(--mono)}
+  .puzzle-nodes{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.75rem}
+  .puzzle-node{
+    font-family:var(--mono);font-size:var(--fs-sm);padding:.8rem 1.3rem;border-radius:6px;
+    border:1px solid var(--border);background:var(--surface);color:var(--text);
+    transition:transform .12s ease, border-color .12s ease, opacity .2s ease;
+  }
+  .puzzle-node:hover:not(:disabled){border-color:var(--accent);transform:translateY(-2px)}
+  .puzzle-node:disabled{opacity:.25;pointer-events:none}
+  .puzzle-node.wrong{border-color:var(--danger);animation:shake .3s ease}
+  @keyframes shake{
+    25%{transform:translateX(-4px)}75%{transform:translateX(4px)}
+  }
+  .puzzle-footer{display:flex;justify-content:space-between;align-items:center;margin-top:1.75rem;flex-wrap:wrap;gap:1rem}
+  .puzzle-status{font-family:var(--mono);font-size:var(--fs-sm);color:var(--muted)}
+  .puzzle-status.won{color:var(--success);font-weight:var(--fw-semibold)}
+  .btn.ghost{background:transparent}
 
-            nav {
-                font-size: 15px;
-            }
+  /* ---------- contact ---------- */
+  .contact-card{padding:clamp(2rem,5vw,3rem);text-align:left}
+  .contact-card h2{font-size:var(--fs-2xl)}
+  .contact-card .sub{color:var(--muted);margin-top:.85rem;max-width:55ch;line-height:1.7;font-size:var(--fs-base)}
+  .contact-links{display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap}
 
-            .gachi {
-                font-size: 20px;
-            }
-        }
-
-    </style>
+  footer.site-foot{
+    border-top:1px solid var(--border-soft);padding:1.75rem 0;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;
+  }
+  footer.site-foot .wrap{display:flex;justify-content:space-between;width:100%;flex-wrap:wrap;gap:1rem}
+  footer.site-foot p{color:var(--muted-2);font-size:var(--fs-xs);font-family:var(--mono)}
+  footer.site-foot a{color:var(--muted-2);font-size:var(--fs-xs);text-decoration:none}
+  footer.site-foot a:hover{color:var(--accent)}
+</style>
 </head>
 <body>
-<nav class="flex px-8">
-    <div class="flex-grow m-auto" style="font-size: 30px">
-        Reza Maulana
-    </div>
-    <ul style="display: flex; list-style:none;margin-left: -30px;">
-        <li class="nav-item"><a href="https://drive.google.com/file/d/154cEt1fESJDoaEdX6VqtiG0DzkatKVAs/view">Portfolio</a></li>
-        <li class="nav-item"><a href="https://drive.google.com/file/d/1HyMRhkJUaqJuGiMcYGLxuYExbYNLh38X/view">CV</a></li>
-    </ul>
-</nav>
-<div class="px-8 flex" style="gap: 10px;margin-bottom: 20px;">
-    <aside style="border-right:0px solid black;min-height: 80vh;flex-grow:0;">
-    </aside>
-    <main style="border-left:0px solid black;flex-grow: 3; padding-top: 2rem;padding-bottom: 2rem;">
-        <div style="height: 100%; border:0px solid black; gap:3rem;" class="flex">
-            <div style="flex-grow: 3;" class="m-auto">
-                <h1 class="">
-                    <span class="gachi" id="gachi">
-                    Hi, Saya Reza Maulana
-                    </span>
 
-                </h1>
-                <p style="font-size: 15px;">
-                    Saya seorang fullstack developer dari Tasikmalaya yang berfokus pada Backend Dev dan Mobile Dev.
-                    Menikmati membangun semuanya dari situs app kecil hingga app yang elegan.
-                    <br>
-                    Lihat <a href="https://drive.google.com/file/d/154cEt1fESJDoaEdX6VqtiG0DzkatKVAs/view">Portfolio Saya</a> dan juga <a href="https://drive.google.com/file/d/1HyMRhkJUaqJuGiMcYGLxuYExbYNLh38X/view">Unduh CV Saya</a>
-                    <br>
-                </p>
-            </div>
-            <div class="flex-grow m-auto">
-                <img src="https://avatars.githubusercontent.com/u/32976777?v=4" alt=""
-                     style="width: 20rem;object-fit: cover;max-height:20rem;border-radius: 10rem;">
-            </div>
+<header>
+  <nav>
+    <a href="#home" class="brand">reza<span class="dot">.</span>maulana</a>
+    <button class="navtoggle" id="navToggle" aria-expanded="false" aria-controls="navList">menu</button>
+    <ul id="navList">
+      <li><a class="navlink" href="#do">Kemampuan</a></li>
+      <li><a class="navlink" href="#projects">Proyek</a></li>
+      <li><a class="navlink" href="#github">GitHub</a></li>
+      <li><a class="navlink" href="#play">Main</a></li>
+      <li><a class="navlink" href="#contact">Kontak</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" id="home">
+    <div class="wrap">
+      <div class="eyebrow">Fullstack Developer — Backend &amp; Mobile</div>
+      <h1>Reza Maulana</h1>
+      <p class="tagline">Saya membangun backend dan aplikasi mobile yang jelas alurnya, gampang dirawat, dan aman dipakai jangka panjang — dari sistem internal korporat sampai project pribadi.</p>
+      <div class="locale">Tasikmalaya, Indonesia</div>
+      <div class="cta-row">
+        <a class="btn primary" href="#projects">Lihat Proyek</a>
+        <a class="btn" href="#contact">Kontak Saya</a>
+        <a class="btn" href="https://drive.google.com/file/d/1HyMRhkJUaqJuGiMcYGLxuYExbYNLh38X/view" target="_blank" rel="noopener">Unduh CV ↗</a>
+      </div>
+      <div class="cap-strip">
+        <div class="label">Kerja sehari-hari saya</div>
+        <ul>
+          <li>Backend &amp; API</li>
+          <li>Aplikasi Mobile</li>
+          <li>Database Design</li>
+          <li>Sistem Internal / Enterprise</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="do">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Apa yang saya kerjakan</div>
+        <h2>Tiga hal yang paling sering saya bangun</h2>
+      </div>
+      <div class="do-grid">
+        <div class="do-card bracket-card reveal">
+          <div class="num">01</div>
+          <h3>Backend &amp; API</h3>
+          <p>Rancang dan bangun REST API, service, serta integrasi antar sistem yang stabil dari sisi server.</p>
         </div>
-    </main>
-</div>
-<footer>
-    <center>
-        <small>© copy right 2023</small>
-    </center>
+        <div class="do-card bracket-card reveal">
+          <div class="num">02</div>
+          <h3>Aplikasi Mobile</h3>
+          <p>Bangun aplikasi mobile dari alur pengguna sampai rilis, fokus ke performa dan pengalaman yang responsif.</p>
+        </div>
+        <div class="do-card bracket-card reveal">
+          <div class="num">03</div>
+          <h3>Sistem Internal / Enterprise</h3>
+          <p>Bikin sistem internal seperti LMS dan portal yang dipakai banyak orang di lingkungan korporat.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Kemampuan</div>
+        <h2>Skill yang saya pakai buat kerja di atas</h2>
+      </div>
+      <div class="reveal">
+        <div class="skill-group">
+          <h3>Pengembangan</h3>
+          <ul><li>Backend Development</li><li>Mobile Development</li><li>REST API Design</li></ul>
+        </div>
+        <div class="skill-group">
+          <h3>Data &amp; Infrastruktur</h3>
+          <ul><li>Database Design</li><li>SQL</li><li>Deployment</li></ul>
+        </div>
+        <div class="skill-group">
+          <h3>Tools &amp; Workflow</h3>
+          <ul><li>Git &amp; Version Control</li><li>Testing</li><li>Debugging Sistem</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="github">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">GitHub Activity</div>
+        <h2>Aktivitas kontribusi — live dari GitHub</h2>
+      </div>
+      <div class="gh-card bracket-card reveal">
+        <div class="gh-head">
+          <span></span>
+          <a href="https://github.com/maulana-reza" target="_blank" rel="noopener">github.com/maulana-reza ↗</a>
+        </div>
+        <div class="gh-stats" id="ghStats" hidden>
+          <div class="gh-stat"><div class="n" id="ghTotal">–</div><div class="l">Kontribusi setahun</div></div>
+          <div class="gh-stat"><div class="n" id="ghStreak">–</div><div class="l">Streak terpanjang</div></div>
+        </div>
+        <p class="gh-status" id="ghStatus">Memuat data GitHub…</p>
+        <div class="gh-scroll">
+          <div class="gh-grid-wrap" id="ghGridWrap" hidden>
+            <div class="gh-daylabels"><span></span><span>Sen</span><span></span><span>Rab</span><span></span><span>Jum</span><span></span></div>
+            <div class="gh-main">
+              <div class="gh-months" id="ghMonths"></div>
+              <div class="gh-cells" id="ghCells"></div>
+            </div>
+          </div>
+        </div>
+        <div class="gh-legend" id="ghLegend" hidden>
+          <span>Sedikit</span>
+          <span class="gh-cell" style="background:var(--surface-2)"></span>
+          <span class="gh-cell" style="background:#5b6ef540"></span>
+          <span class="gh-cell" style="background:#5b6ef580"></span>
+          <span class="gh-cell" style="background:#5b6ef5c0"></span>
+          <span class="gh-cell" style="background:#5b6ef5"></span>
+          <span>Banyak</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Proyek</div>
+        <h2>Project pribadi &amp; korporat</h2>
+      </div>
+      <div class="proj-tabs reveal">
+        <button data-tab="personal" aria-pressed="true">Pribadi</button>
+        <button data-tab="corporate" aria-pressed="false">Korporat</button>
+      </div>
+      <div class="proj-panel active reveal" data-panel="personal">
+        <div class="proj-grid">
+          <div class="proj-card bracket-card">
+            <div class="proj-thumb"><img src="assets/img/projects/lokaspace.jpg" alt="Tangkapan layar Lokaspace" loading="lazy"></div>
+            <div class="proj-card-body">
+              <div class="kind">Co-Founder</div>
+              <h3>Lokaspace</h3>
+              <p>Ikut membangun Lokaspace sejak awal sebagai co-founder.</p>
+              <ul class="tags"><li>Startup</li><li>Co-Founder</li></ul>
+              <div class="links"><a href="https://lokaspace.com" target="_blank" rel="noopener">Kunjungi ↗</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-panel reveal" data-panel="corporate">
+        <div class="proj-grid">
+          <div class="proj-card bracket-card">
+            <div class="proj-thumb"><img src="assets/img/projects/admisi.jpg" alt="Tangkapan layar Admisi UNSIL" loading="lazy"></div>
+            <div class="proj-card-body">
+              <div class="kind">Korporat — Universitas Siliwangi</div>
+              <h3>Admisi</h3>
+              <p>Sistem pendaftaran mahasiswa baru, dari registrasi sampai pengumuman kelulusan.</p>
+              <ul class="tags"><li>Admisi</li><li>PMB</li></ul>
+              <div class="links"><a href="https://admisi.unsil.ac.id" target="_blank" rel="noopener">Live View ↗</a></div>
+            </div>
+          </div>
+          <div class="proj-card bracket-card">
+            <div class="proj-thumb"><img src="assets/img/projects/sidata.jpg" alt="Tangkapan layar SIData UNSIL" loading="lazy"></div>
+            <div class="proj-card-body">
+              <div class="kind">Korporat — Universitas Siliwangi</div>
+              <h3>SIData</h3>
+              <p>Manajemen kuota dan daya tampung mahasiswa baru lintas program studi dan fakultas.</p>
+              <ul class="tags"><li>Akademik</li><li>Kuota</li></ul>
+              <div class="links"><a href="https://sidata.unsil.ac.id" target="_blank" rel="noopener">Live View ↗</a></div>
+            </div>
+          </div>
+          <div class="proj-card bracket-card">
+            <div class="proj-thumb"><img src="assets/img/projects/siukt.jpg" alt="Tangkapan layar SIUKT UNSIL" loading="lazy"></div>
+            <div class="proj-card-body">
+              <div class="kind">Korporat — Universitas Siliwangi</div>
+              <h3>SIUKT</h3>
+              <p>Layanan pengajuan dan penyesuaian kategori UKT untuk mahasiswa aktif.</p>
+              <ul class="tags"><li>UKT</li><li>Layanan Mahasiswa</li></ul>
+              <div class="links"><a href="https://siukt.unsil.ac.id" target="_blank" rel="noopener">Live View ↗</a></div>
+            </div>
+          </div>
+          <div class="proj-card bracket-card">
+            <div class="proj-thumb"><img src="assets/img/projects/rusunawa.jpg" alt="Tangkapan layar Rusunawa UNSIL" loading="lazy"></div>
+            <div class="proj-card-body">
+              <div class="kind">Korporat — Universitas Siliwangi</div>
+              <h3>Rusunawa</h3>
+              <p>Cek ketersediaan kamar dan pendaftaran hunian mahasiswa lewat satu akun.</p>
+              <ul class="tags"><li>Hunian</li><li>Layanan Mahasiswa</li></ul>
+              <div class="links"><a href="https://rusunawa.unsil.ac.id" target="_blank" rel="noopener">Live View ↗</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="play">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Main dulu</div>
+        <h2>System Check — susun alur request sampai jadi response</h2>
+        <p class="sub">Klik node sesuai urutan alur sistem yang benar. Posisinya diacak, tugas kamu cari urutan yang tepat.</p>
+      </div>
+      <div class="puzzle-card bracket-card reveal">
+        <div class="puzzle-head">
+          <div class="puzzle-meta">
+            <span>Percobaan salah: <b id="pzWrong">0</b></span>
+            <span>Progress: <b id="pzProgress">0/5</b></span>
+          </div>
+          <button class="btn ghost" id="pzShuffle">Acak Ulang</button>
+        </div>
+
+        <div class="puzzle-track" id="pzTrack"></div>
+        <div class="puzzle-nodes" id="pzNodes"></div>
+
+        <div class="puzzle-footer">
+          <p class="puzzle-status" id="pzStatus">Mulai klik node pertama.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact-card bracket-card reveal">
+        <div class="eyebrow">Kontak</div>
+        <h2>Ngobrol soal project?</h2>
+        <p class="sub">Terbuka buat diskusi kerja sama, project backend/mobile, atau sekadar tanya-tanya soal sistem yang lagi kamu bangun.</p>
+        <div class="contact-links">
+          <a class="btn primary" href="mailto:7392maulana@gmail.com">Email Saya ↗</a>
+          <a class="btn" href="https://linkedin.com/in/reza-maulana" target="_blank" rel="noopener">LinkedIn ↗</a>
+          <a class="btn" href="https://github.com/maulana-reza" target="_blank" rel="noopener">GitHub ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p>© 2026 Reza Maulana</p>
+    <a href="#home">Kembali ke atas ↑</a>
+  </div>
 </footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.10/typed.min.js" integrity="sha512-hIlMpy2enepx9maXZF1gn0hsvPLerXoLHdb095CmRY5HG3bZfN7XPBZ14g+TUDH1aGgfLyPHmY9/zuU53smuMw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script>
-    new Typed('#gachi',{
-        strings : ['','Building web and mobile app','Hi, Saya Reza Maulana'],
-        typeSpeed : 100,
-        delaySpeed : 1000,
-        loop : true
+(function(){
+  /* nav toggle (mobile) */
+  var navToggle = document.getElementById('navToggle');
+  var navList = document.getElementById('navList');
+  navToggle.addEventListener('click', function(){
+    var open = navList.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  navList.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ navList.classList.remove('open'); navToggle.setAttribute('aria-expanded','false'); });
+  });
+
+  /* scroll reveal */
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var revealEls = document.querySelectorAll('.reveal');
+  if(reduceMotion || !('IntersectionObserver' in window)){
+    revealEls.forEach(function(el){ el.classList.add('in-view'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ entry.target.classList.add('in-view'); io.unobserve(entry.target); }
+      });
+    }, { threshold: .15 });
+    revealEls.forEach(function(el){ io.observe(el); });
+  }
+
+  /* project tabs */
+  var tabButtons = document.querySelectorAll('.proj-tabs button');
+  var panels = document.querySelectorAll('.proj-panel');
+  tabButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      tabButtons.forEach(function(b){ b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+      panels.forEach(function(p){ p.classList.toggle('active', p.dataset.panel === btn.dataset.tab); });
     });
+  });
+
+  /* ---------------- GitHub live heatmap ---------------- */
+  var GH_USER = 'maulana-reza';
+  var monthsID = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+  var dayFmt = new Intl.DateTimeFormat('id-ID', { day:'numeric', month:'short', year:'numeric' });
+
+  function levelColor(level){
+    return ['var(--surface-2)','#5b6ef540','#5b6ef580','#5b6ef5c0','#5b6ef5'][level] || 'var(--surface-2)';
+  }
+
+  fetch('https://github-contributions-api.jogruber.de/v4/' + GH_USER + '?y=last')
+    .then(function(res){ if(!res.ok) throw new Error('bad response'); return res.json(); })
+    .then(function(data){
+      var contributions = data.contributions || [];
+      if(!contributions.length) throw new Error('empty');
+
+      var total = 0, streak = 0, bestStreak = 0;
+      contributions.forEach(function(d){
+        total += d.count;
+        if(d.count > 0){ streak++; bestStreak = Math.max(bestStreak, streak); }
+        else { streak = 0; }
+      });
+
+      var first = new Date(contributions[0].date + 'T00:00:00');
+      var pad = first.getDay();
+      var cells = [];
+      for(var i=0;i<pad;i++) cells.push(null);
+      contributions.forEach(function(d){ cells.push(d); });
+      while(cells.length % 7 !== 0) cells.push(null);
+
+      var weeks = [];
+      for(var w=0; w<cells.length; w+=7) weeks.push(cells.slice(w, w+7));
+
+      var cellsEl = document.getElementById('ghCells');
+      var monthsEl = document.getElementById('ghMonths');
+      cellsEl.style.gridTemplateColumns = 'repeat(' + weeks.length + ', 12px)';
+      monthsEl.style.gridTemplateColumns = 'repeat(' + weeks.length + ', 12px)';
+
+      var lastMonth = -1;
+      var monthsHTML = '';
+      var cellsHTML = '';
+      weeks.forEach(function(week){
+        var firstDay = week.find(function(d){ return d; });
+        var label = '';
+        if(firstDay){
+          var m = new Date(firstDay.date + 'T00:00:00').getMonth();
+          if(m !== lastMonth){ label = monthsID[m]; lastMonth = m; }
+        }
+        monthsHTML += '<span>' + label + '</span>';
+        week.forEach(function(d){
+          if(!d){ cellsHTML += '<div class="gh-cell" style="background:transparent"></div>'; return; }
+          var dateLabel = dayFmt.format(new Date(d.date + 'T00:00:00'));
+          var title = d.count + ' kontribusi — ' + dateLabel;
+          cellsHTML += '<div class="gh-cell" title="' + title + '" style="background:' + levelColor(d.level) + '"></div>';
+        });
+      });
+      monthsEl.innerHTML = monthsHTML;
+      cellsEl.innerHTML = cellsHTML;
+
+      document.getElementById('ghTotal').textContent = total.toLocaleString('id-ID');
+      document.getElementById('ghStreak').textContent = bestStreak + ' hari';
+      document.getElementById('ghStats').hidden = false;
+      document.getElementById('ghGridWrap').hidden = false;
+      document.getElementById('ghLegend').hidden = false;
+      document.getElementById('ghStatus').hidden = true;
+    })
+    .catch(function(){
+      document.getElementById('ghStatus').textContent = 'Gak bisa ambil data GitHub sekarang — lihat langsung di profil GitHub.';
+    });
+
+  /* ---------------- Puzzle: System Check ---------------- */
+  var PIPELINE = [
+    { id:'request', label:'Request' },
+    { id:'auth', label:'Autentikasi' },
+    { id:'logic', label:'Proses Bisnis' },
+    { id:'db', label:'Database' },
+    { id:'response', label:'Response' }
+  ];
+
+  var nodesEl = document.getElementById('pzNodes');
+  var trackEl = document.getElementById('pzTrack');
+  var statusEl = document.getElementById('pzStatus');
+  var wrongEl = document.getElementById('pzWrong');
+  var progressEl = document.getElementById('pzProgress');
+  var shuffleBtn = document.getElementById('pzShuffle');
+
+  var nextIndex = 0, wrongCount = 0;
+
+  function shuffle(arr){
+    var a = arr.slice();
+    for(var i = a.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+
+  function renderTrack(){
+    var html = '';
+    PIPELINE.forEach(function(node, i){
+      html += '<div class="track-slot" data-slot="' + node.id + '">' + node.label + '</div>';
+      if(i < PIPELINE.length - 1) html += '<span class="track-arrow">→</span>';
+    });
+    trackEl.innerHTML = html;
+  }
+
+  function renderNodes(){
+    var order = shuffle(PIPELINE);
+    var html = '';
+    order.forEach(function(node){
+      html += '<button class="puzzle-node" data-id="' + node.id + '">' + node.label + '</button>';
+    });
+    nodesEl.innerHTML = html;
+    nodesEl.querySelectorAll('.puzzle-node').forEach(function(btn){
+      btn.addEventListener('click', onNodeClick);
+    });
+  }
+
+  function onNodeClick(e){
+    var btn = e.currentTarget;
+    var id = btn.dataset.id;
+    var expected = PIPELINE[nextIndex].id;
+    if(id === expected){
+      btn.disabled = true;
+      trackEl.querySelector('[data-slot="' + id + '"]').classList.add('filled');
+      nextIndex++;
+      progressEl.textContent = nextIndex + '/' + PIPELINE.length;
+      if(nextIndex === PIPELINE.length){
+        statusEl.textContent = '✓ System Online — urutan benar semua.';
+        statusEl.classList.add('won');
+      } else {
+        statusEl.textContent = 'Benar. Lanjut cari node berikutnya.';
+      }
+    } else {
+      wrongCount++;
+      wrongEl.textContent = wrongCount;
+      btn.classList.add('wrong');
+      statusEl.textContent = 'Belum tepat, coba lagi.';
+      setTimeout(function(){ btn.classList.remove('wrong'); }, 300);
+    }
+  }
+
+  function resetPuzzle(){
+    nextIndex = 0; wrongCount = 0;
+    wrongEl.textContent = '0';
+    progressEl.textContent = '0/' + PIPELINE.length;
+    statusEl.textContent = 'Mulai klik node pertama.';
+    statusEl.classList.remove('won');
+    renderTrack();
+    renderNodes();
+  }
+
+  shuffleBtn.addEventListener('click', resetPuzzle);
+  resetPuzzle();
+})();
 </script>
 </body>
 </html>
