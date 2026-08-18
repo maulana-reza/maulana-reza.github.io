@@ -23,6 +23,14 @@
     *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
   }
   body{margin:0;background:var(--bg);color:var(--text);font-family:var(--mono);line-height:1.5;-webkit-font-smoothing:antialiased}
+
+  /* ---------- scrollbars (match terminal theme) ---------- */
+  html{scrollbar-color:var(--border) var(--bg);scrollbar-width:thin}
+  ::-webkit-scrollbar{width:11px;height:11px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-corner{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background-color:var(--border);border-radius:6px;border:2px solid var(--bg);background-clip:padding-box}
+  ::-webkit-scrollbar-thumb:hover{background-color:var(--amber)}
   img{max-width:100%;display:block}
   a{color:inherit}
   p{margin:0}
@@ -34,8 +42,11 @@
   .skip-link:focus{top:1rem}
 
   /* ---------- header / nav ---------- */
-  header{position:sticky;top:0;z-index:40;background:rgba(8,9,10,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
-  nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;max-width:1000px;margin:0 auto}
+  /* header::before (not backdrop-filter directly on header) so header never becomes a
+     containing block for its position:fixed descendants (the mobile nav FAB/popup) */
+  header{position:sticky;top:0;z-index:40;border-bottom:1px solid var(--border)}
+  header::before{content:"";position:absolute;inset:0;z-index:-1;background:rgba(8,9,10,.92);backdrop-filter:blur(8px)}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1rem;max-width:1000px;margin:0 auto}
   nav .brand{font-weight:700;font-size:.95rem;text-decoration:none;color:var(--text)}
   nav .brand span{color:var(--amber)}
   nav ul{display:flex;gap:1.5rem}
@@ -43,25 +54,53 @@
   nav a.navlink:hover,nav a.navlink.active{color:var(--amber)}
   .navtoggle{display:none;background:none;border:1px solid var(--border);color:var(--text);padding:.4rem .6rem;border-radius:4px}
   @media (max-width:760px){
-    nav ul{position:absolute;top:100%;left:0;right:0;background:var(--panel);border-bottom:1px solid var(--border);
-      flex-direction:column;padding:1rem 1.5rem;gap:1rem;display:none}
+    /* top bar dropped on mobile — the terminal titlebar already carries identity;
+       only the fixed nav FAB/popup (below) stays, both unaffected since they're
+       position:fixed and no longer read header as their containing block */
+    header{position:static;border-bottom:none}
+    header::before{content:none}
+    nav{padding:0}
+    nav .brand{display:none}
+    .navtoggle{
+      display:flex;align-items:center;justify-content:center;
+      position:fixed;right:1.1rem;bottom:1.1rem;z-index:60;
+      width:3.1rem;height:3.1rem;padding:0;border-radius:50%;
+      background:var(--amber);border:1px solid var(--amber);color:#14100a;
+      font-size:1.2rem;line-height:1;box-shadow:0 12px 26px -8px rgba(0,0,0,.7);
+    }
+    .navtoggle:hover{background:#f0b25c}
+    nav ul{
+      position:fixed;left:auto;top:auto;right:1.1rem;bottom:4.6rem;
+      background:var(--panel);border:1px solid var(--border);border-radius:10px;
+      flex-direction:column;padding:.6rem;gap:.15rem;display:none;
+      min-width:11rem;box-shadow:0 24px 48px -20px rgba(0,0,0,.85);z-index:60}
     nav ul.open{display:flex}
-    .navtoggle{display:block}
+    nav a.navlink{display:block;padding:.6rem .7rem;border-radius:6px}
+    nav a.navlink:hover,nav a.navlink.active{background:rgba(232,163,61,.12)}
   }
 
-  /* ---------- terminal shell ---------- */
-  main{padding:2rem 1.25rem 4rem}
-  .term-window{max-width:1000px;margin:0 auto;border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 50px 90px -50px rgba(0,0,0,.85)}
-  .term-titlebar{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;background:#101010;border-bottom:1px solid var(--border)}
+  /* ---------- terminal shell (mobile-first: flat, no window chrome by default) ---------- */
+  main{padding:1.5rem .75rem 3rem}
+  .term-window{max-width:1000px;margin:0 auto}
+  .term-titlebar{display:flex;align-items:center;gap:.5rem;padding:.6rem .5rem;background:#101010;border-bottom:1px solid var(--border)}
   .dot{width:10px;height:10px;border-radius:50%}
   .dot.r{background:var(--red)}.dot.y{background:var(--amber)}.dot.g{background:var(--green)}
   .term-titlebar .path{margin-left:.75rem;font-size:.78rem;color:var(--muted)}
-  .term-body{padding:clamp(1.25rem,4vw,2.5rem);background:var(--panel)}
-  .line{margin-top:2.1rem}
+  .term-body{padding:1.5rem .25rem;background:var(--panel)}
+  .line{margin-top:1.75rem}
   .line:first-child{margin-top:0}
   .prompt{color:var(--green);font-weight:700}
   .cmd{color:var(--text);font-weight:700}
-  .out{margin:.75rem 0 0 1.15rem;padding-left:1rem;border-left:2px solid var(--border);color:var(--text);line-height:1.75;font-size:.88rem}
+  .out{margin:.75rem 0 0 .25rem;padding-left:.6rem;border-left:2px solid var(--border);color:var(--text);line-height:1.75;font-size:.88rem}
+  @media (min-width:641px){
+    nav{padding:1rem 1.5rem}
+    main{padding:2rem 1.25rem 4rem}
+    .term-window{border:1px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 50px 90px -50px rgba(0,0,0,.85)}
+    .term-titlebar{padding:.75rem 1rem}
+    .term-body{padding:clamp(1.25rem,4vw,2.5rem)}
+    .line{margin-top:2.1rem}
+    .out{margin:.75rem 0 0 1.15rem;padding-left:1rem}
+  }
   .out .c{color:var(--muted)}
   .out .k{color:var(--muted);display:inline-block;min-width:11ch;margin-right:.5em}
   .out .v{color:var(--text);font-weight:600}
@@ -137,7 +176,7 @@
 <header>
   <nav>
     <a href="#home" class="brand">reza<span>.</span>maulana</a>
-    <button class="navtoggle" id="navToggle" aria-expanded="false" aria-controls="navList">menu</button>
+    <button class="navtoggle" id="navToggle" aria-expanded="false" aria-controls="navList" aria-label="Buka menu navigasi">☰</button>
     <ul id="navList">
       <li><a class="navlink" data-nav="do" href="#do">Kemampuan</a></li>
       <li><a class="navlink" data-nav="projects" href="#projects">Proyek</a></li>
@@ -219,6 +258,7 @@
         <h2 class="sr-only">Main dulu — Terminal Race</h2>
         <span class="prompt">$</span> <span class="cmd">./typing-race.sh --start</span>
         <div class="out">
+          <p class="c" style="margin:0 0 .6rem">// jeda santai di sela CV & proyek — mini-game biar ga cuma teks doang, sekalian iseng ngukur seberapa lancar ngetik command sehari-hari.</p>
           <div class="c" id="raceIntro"># ketik ulang command yang muncul secepat &amp; setepat mungkin. 20 detik, sebanyak-banyaknya.</div>
           <div class="race" id="race" hidden>
             <div class="race-target" id="raceTarget"></div>
@@ -263,12 +303,17 @@
   /* nav toggle (mobile) */
   var navToggle = document.getElementById('navToggle');
   var navList = document.getElementById('navList');
-  navToggle.addEventListener('click', function(){
-    var open = navList.classList.toggle('open');
+  function setNavOpen(open){
+    navList.classList.toggle('open', open);
     navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    navToggle.textContent = open ? '✕' : '☰';
+    navToggle.setAttribute('aria-label', open ? 'Tutup menu navigasi' : 'Buka menu navigasi');
+  }
+  navToggle.addEventListener('click', function(){
+    setNavOpen(!navList.classList.contains('open'));
   });
   navList.querySelectorAll('a').forEach(function(a){
-    a.addEventListener('click', function(){ navList.classList.remove('open'); navToggle.setAttribute('aria-expanded','false'); });
+    a.addEventListener('click', function(){ setNavOpen(false); });
   });
 
   /* scroll-spy active nav link */
