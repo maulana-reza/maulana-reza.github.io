@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reza Maulana — Fullstack Developer</title>
+<title>Reza Maulana | Fullstack Developer</title>
 <meta name="description" content="Reza Maulana, fullstack developer di Tasikmalaya yang fokus pada backend development dan aplikasi mobile.">
-<meta property="og:title" content="Reza Maulana — Fullstack Developer">
+<meta property="og:title" content="Reza Maulana | Fullstack Developer">
 <meta property="og:description" content="Fullstack developer di Tasikmalaya, fokus backend development dan aplikasi mobile.">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary">
@@ -54,7 +54,7 @@
   nav a.navlink:hover,nav a.navlink.active{color:var(--amber)}
   .navtoggle{display:none;background:none;border:1px solid var(--border);color:var(--text);padding:.4rem .6rem;border-radius:4px}
   @media (max-width:760px){
-    /* top bar dropped on mobile — the terminal titlebar already carries identity;
+    /* top bar dropped on mobile; the terminal titlebar already carries identity;
        only the fixed nav FAB/popup (below) stays, both unaffected since they're
        position:fixed and no longer read header as their containing block */
     header{position:static;border-bottom:none}
@@ -236,7 +236,7 @@
     <div class="term-body">
 
       <div class="line" id="home">
-        <h1 class="sr-only">Reza Maulana — Fullstack Developer, Backend &amp; Mobile</h1>
+        <h1 class="sr-only">Reza Maulana, Fullstack Developer Backend &amp; Mobile</h1>
         <span class="prompt">$</span> <span class="cmd">whoami</span>
         <div class="out">
           <!--BUILD:HERO-->
@@ -273,8 +273,8 @@
         <span class="prompt">$</span> <span class="cmd">curl api.github.com/maulana-reza | jq .activity</span>
         <div class="out">
           <div id="ghStats" hidden>
-            <span class="k">total</span><span class="v" id="ghTotal">–</span> <span class="c">kontribusi/tahun</span>
-            <div><span class="k">streak</span><span class="v" id="ghStreak">–</span> <span class="c">hari terpanjang</span></div>
+            <span class="k">total</span><span class="v" id="ghTotal">-</span> <span class="c">kontribusi/tahun</span>
+            <div><span class="k">streak</span><span class="v" id="ghStreak">-</span> <span class="c">hari terpanjang</span></div>
           </div>
           <p class="c" id="ghStatus">Memuat data GitHub…</p>
           <div class="heatmap" id="ghHeatmap" hidden></div>
@@ -298,10 +298,10 @@
       </div>
 
       <div class="line" id="play">
-        <h2 class="sr-only">Main dulu — Terminal Race</h2>
+        <h2 class="sr-only">Main dulu: Terminal Race</h2>
         <span class="prompt">$</span> <span class="cmd">./typing-race.sh --start</span>
         <div class="out">
-          <p class="c" style="margin:0 0 .6rem">// jeda santai di sela CV & proyek — mini-game biar ga cuma teks doang, sekalian iseng ngukur seberapa lancar ngetik command sehari-hari.</p>
+          <p class="c" style="margin:0 0 .6rem">// jeda santai di sela CV & proyek. mini-game kecil buat iseng ngukur seberapa lancar kamu ngetik command sehari-hari.</p>
           <div class="c" id="raceIntro"># ketik ulang command yang muncul secepat &amp; setepat mungkin. 20 detik, sebanyak-banyaknya.</div>
           <div class="race" id="race" hidden>
             <div class="race-target" id="raceTarget"></div>
@@ -330,7 +330,7 @@
   </div>
 </main>
 
-<footer><p>© 2026 Reza Maulana — <a href="#home" style="color:var(--muted)">kembali ke atas ↑</a></p></footer>
+<footer><p>© 2026 Reza Maulana · <a href="#home" style="color:var(--muted)">kembali ke atas ↑</a></p></footer>
 
 <div class="lightbox" id="lightbox" hidden>
   <div class="lightbox-inner">
@@ -343,7 +343,7 @@
 <div class="cv-modal" id="cvModal" role="dialog" aria-modal="true" aria-labelledby="cvTitle" data-nosnippet hidden>
   <div class="cv-panel">
     <div class="cv-toolbar">
-      <span class="c" id="cvTitle">cv — reza maulana</span>
+      <span class="c" id="cvTitle">~/cv/reza-maulana</span>
       <div class="actions">
         <button class="btn primary" id="cvPrint" type="button" disabled>Simpan PDF</button>
         <button class="cv-close" id="cvClose" type="button" aria-label="Tutup CV">✕</button>
@@ -428,7 +428,7 @@
         week.forEach(function(d){
           if(!d){ html += '<div class="hm-cell" style="background:transparent"></div>'; return; }
           var dateLabel = dayFmt.format(new Date(d.date + 'T00:00:00'));
-          var title = d.count + ' kontribusi — ' + dateLabel;
+          var title = d.count + ' kontribusi, ' + dateLabel;
           html += '<div class="hm-cell" title="' + title + '" style="background:' + levelColor(d.level) + '"></div>';
         });
         html += '</div>';
@@ -442,7 +442,7 @@
       document.getElementById('ghStatus').hidden = true;
     })
     .catch(function(){
-      document.getElementById('ghStatus').textContent = 'Gak bisa ambil data GitHub sekarang — lihat langsung di profil GitHub.';
+      document.getElementById('ghStatus').textContent = 'Gak bisa ambil data GitHub sekarang. Lihat langsung di profil GitHub.';
     });
 
   /* ---------------- Terminal Race mini-game ---------------- */
@@ -520,7 +520,7 @@
     raceBtn.textContent = '[ main lagi ]';
     var wpm = Math.round((race.score * 5) / (20 / 60));
     raceResult.hidden = false;
-    raceResult.innerHTML = '<b>' + race.score + '</b> command selesai, <b>' + race.miss + '</b> salah ketik — kira-kira <b>' + wpm + '</b> WPM.';
+    raceResult.innerHTML = '<b>' + race.score + '</b> command selesai, <b>' + race.miss + '</b> salah ketik, kira-kira <b>' + wpm + '</b> WPM.';
   }
   raceInput.addEventListener('input', function(){
     if(!race.active) return;
@@ -609,7 +609,7 @@
       el.href = 'mailto:' + email;
       el.textContent = email;
     } catch(e){
-      el.textContent = 'gagal memuat — hubungi lewat LinkedIn/GitHub';
+      el.textContent = 'gagal memuat. Hubungi lewat LinkedIn/GitHub.';
     }
   }
   revealEmail();
@@ -630,7 +630,7 @@
       cvLoaded = true;
       cvPrint.disabled = false;
     } catch(e){
-      cvBody.innerHTML = '<p class="cv-status">gagal memuat CV — hubungi lewat email/LinkedIn.</p>';
+      cvBody.innerHTML = '<p class="cv-status">gagal memuat CV. Hubungi lewat email/LinkedIn.</p>';
     }
   }
   function openCv(){

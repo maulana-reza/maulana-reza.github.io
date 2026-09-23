@@ -11,7 +11,7 @@
  * encrypted (fresh random key/IV each build) and embedded as ciphertext in the shipped
  * index.html. The email is decrypted client-side via the Web Crypto API on page load; the
  * CV only when its modal is opened, so crawlers never see CV text. Note this is obfuscation
- * against casual scraping, not real confidentiality — the decryption key ships in the
+ * against casual scraping, not real confidentiality, since the decryption key ships in the
  * same page, since there is no server to keep it secret on a static site. Every other
  * field is public portfolio content and is baked into the HTML as plain, crawlable text.
  *
@@ -58,7 +58,7 @@ const focusFragment = content.focus
   .map((item, i) => {
     const n = String(i + 1).padStart(2, '0');
     const margin = i === 0 ? '' : ' style="margin-top:.5rem"';
-    return `          <div${margin}>${n}. ${esc(item.title)} <span class="c">— ${esc(item.desc)}</span></div>`;
+    return `          <div${margin}>${n}. ${esc(item.title)}: <span class="c">${esc(item.desc)}</span></div>`;
   })
   .join('\n');
 html = html.replace('          <!--BUILD:FOCUS-->', focusFragment);
@@ -119,7 +119,7 @@ function li(text) {
   return `<li>${esc(text)}</li>`;
 }
 function range(start, end) {
-  return `<time>${esc(start)}</time> – <time>${esc(end)}</time>`;
+  return `<time>${esc(start)}</time> - <time>${esc(end)}</time>`;
 }
 
 const c = cv.contact;
@@ -151,8 +151,8 @@ const cvFragment = [
   ...cv.experience.map((e) =>
     [
       '<div class="cv-entry">',
-      `<h3>${esc(e.title)} — ${esc(e.company)}</h3>`,
-      `<p class="cv-meta">${esc(e.location)} | ${range(e.start, e.end)}</p>`,
+      `<h3>${esc(e.title)}</h3>`,
+      `<p class="cv-meta">${esc(e.company)}, ${esc(e.location)} | ${range(e.start, e.end)}</p>`,
       `<ul>${e.bullets.map(li).join('')}</ul>`,
       '</div>',
     ].join('')
@@ -162,8 +162,8 @@ const cvFragment = [
   ...cv.projects.map((p) =>
     [
       '<div class="cv-entry">',
-      `<h3>${esc(p.name)} — ${esc(p.role)}</h3>`,
-      `<p class="cv-meta">${esc(p.url)}</p>`,
+      `<h3>${esc(p.name)}</h3>`,
+      `<p class="cv-meta">${esc(p.role)} | ${esc(p.url)}</p>`,
       `<p>${esc(p.desc)}</p>`,
       '</div>',
     ].join('')
@@ -173,8 +173,8 @@ const cvFragment = [
   ...cv.education.map((ed) =>
     [
       '<div class="cv-entry">',
-      `<h3>${esc(ed.degree)}${ed.major ? ` ${esc(ed.major)}` : ''} — ${esc(ed.school)}</h3>`,
-      `<p class="cv-meta">${esc(ed.location)} | ${range(ed.start, ed.end)}</p>`,
+      `<h3>${esc(ed.degree)}${ed.major ? ` ${esc(ed.major)}` : ''}</h3>`,
+      `<p class="cv-meta">${esc(ed.school)}, ${esc(ed.location)} | ${range(ed.start, ed.end)}</p>`,
       '</div>',
     ].join('')
   ),
