@@ -93,16 +93,16 @@ const personalFragment = projFeature(
 );
 html = html.replace('          <!--BUILD:PERSONAL_PROJECT-->', personalFragment);
 
-/* ---------- CORPORATE PROJECTS ---------- */
-const corporateCards = content.corporateProjects
+/* ---------- CAMPUS PROJECTS (Universitas Siliwangi) ---------- */
+const campusCards = content.campusProjects
   .map((p) => projFeature({ ...p, roleLabel: 'klien', roleValue: p.client }, 12))
   .join('\n');
-const corporateFragment = [
+const campusFragment = [
   '          <div class="proj-list">',
-  corporateCards,
+  campusCards,
   '          </div>',
 ].join('\n');
-html = html.replace('          <!--BUILD:CORPORATE_PROJECTS-->', corporateFragment);
+html = html.replace('          <!--BUILD:CAMPUS_PROJECTS-->', campusFragment);
 
 /* ---------- CONTACT (email is the sensitive field) ---------- */
 const contact = content.contact;
