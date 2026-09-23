@@ -132,6 +132,47 @@
   .lightbox-close{position:absolute;top:-2.5rem;right:0;background:none;border:1px solid var(--border);color:var(--text);width:2.2rem;height:2.2rem;border-radius:4px;font-size:1rem;line-height:1}
   .lightbox-close:hover{border-color:var(--amber)}
 
+  /* ---------- CV modal ---------- */
+  .cv-modal{position:fixed;inset:0;z-index:100;background:rgba(4,5,6,.92);display:flex;justify-content:center;padding:1rem .5rem;overflow-y:auto;overscroll-behavior:contain}
+  .cv-modal[hidden]{display:none}
+  .cv-panel{width:100%;min-width:0;max-width:820px;margin:auto 0}
+  .cv-toolbar{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:.75rem}
+  .cv-toolbar .c{color:var(--muted);font-size:.78rem}
+  .cv-toolbar .actions{display:flex;gap:.5rem}
+  .cv-toolbar button{font-family:var(--mono);cursor:pointer}
+  .cv-close{background:none;border:1px solid var(--border);color:var(--text);width:2.4rem;height:2.4rem;border-radius:4px;font-size:1rem;line-height:1}
+  .cv-close:hover{border-color:var(--amber)}
+  .cv-status{color:var(--muted);font-size:.85rem;padding:2rem 0;text-align:center}
+  .cv-body{border-radius:6px;overflow:hidden}
+  body.cv-open{overflow:hidden}
+  @media (min-width:641px){.cv-modal{padding:2rem 1.25rem}}
+  /*BUILD:CV_STYLE_START*/
+  .cv-doc{overflow-wrap:anywhere;background:#fff;color:#1a1a1a;font-family:Arial,Helvetica,sans-serif;font-size:10.5pt;line-height:1.45;padding:1.5rem 1.25rem}
+  .cv-doc h1{font-size:20pt;margin:0;line-height:1.2;color:#111}
+  .cv-doc .cv-headline{font-size:11.5pt;font-weight:700;margin:.15rem 0 .4rem;color:#333}
+  .cv-doc .cv-contact{font-size:9.5pt;color:#333}
+  .cv-doc h2{break-after:avoid;font-size:11pt;text-transform:uppercase;letter-spacing:.06em;margin:1.1rem 0 .45rem;padding-bottom:.2rem;border-bottom:1px solid #999;color:#111}
+  .cv-doc h3{font-size:10.5pt;margin:0;color:#111}
+  .cv-doc p{margin:0}
+  .cv-doc ul{margin:.3rem 0 0;padding-left:1.15rem;list-style:disc}
+  .cv-doc .cv-skills{list-style:none;padding-left:0}
+  .cv-doc .cv-meta{font-size:9.5pt;color:#444}
+  .cv-doc .cv-entry{break-inside:avoid}
+  .cv-doc .cv-entry + .cv-entry{margin-top:.7rem}
+  .cv-doc a{color:#1a1a1a;text-decoration:none}
+  @media (min-width:641px){.cv-doc{padding:2.5rem 3rem}}
+  body.cv-standalone{margin:0}
+  body.cv-standalone .cv-doc{padding:0}
+  @page{size:A4;margin:14mm 16mm}
+  /*BUILD:CV_STYLE_END*/
+  @media print{
+    body.cv-open > *:not(#cvModal){display:none !important}
+    body.cv-open{background:#fff}
+    body.cv-open .cv-modal{position:static;display:block;padding:0;background:none;overflow:visible}
+    body.cv-open .cv-toolbar{display:none}
+    body.cv-open .cv-doc{padding:0}
+  }
+
   .bar-row{display:flex;align-items:center;gap:.75rem;margin-top:.55rem}
   .bar-row .lbl{min-width:16ch;color:var(--muted);font-size:.82rem}
 
@@ -161,7 +202,9 @@
     display:inline-block;font-family:var(--mono);font-size:.8rem;padding:.65rem 1.1rem;border-radius:4px;
     text-decoration:none;border:1px solid var(--border);color:var(--text);transition:border-color .15s ease,background .15s ease;
   }
+  button.btn{background:none;cursor:pointer}
   .btn.primary{background:var(--amber);border-color:var(--amber);color:#14100a;font-weight:700}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
   .btn.primary:hover{background:#f0b25c}
   .btn:not(.primary):hover{border-color:var(--amber)}
 
@@ -210,7 +253,7 @@
         <div class="out" style="display:flex;gap:.85rem;flex-wrap:wrap;border-left:none;padding-left:0;margin-left:0">
           <a class="btn primary" href="#projects">Lihat Proyek</a>
           <a class="btn" href="#contact">Kontak Saya</a>
-          <a class="btn" href="https://drive.google.com/file/d/1HyMRhkJUaqJuGiMcYGLxuYExbYNLh38X/view" target="_blank" rel="noopener">Unduh CV ↗</a>
+          <button class="btn" id="cvOpen" type="button" aria-haspopup="dialog" aria-controls="cvModal">Lihat CV</button>
         </div>
       </div>
 
@@ -359,8 +402,22 @@
   </div>
 </div>
 
+<div class="cv-modal" id="cvModal" role="dialog" aria-modal="true" aria-labelledby="cvTitle" data-nosnippet hidden>
+  <div class="cv-panel">
+    <div class="cv-toolbar">
+      <span class="c" id="cvTitle">cv — reza maulana</span>
+      <div class="actions">
+        <button class="btn primary" id="cvPrint" type="button" disabled>Simpan PDF</button>
+        <button class="cv-close" id="cvClose" type="button" aria-label="Tutup CV">✕</button>
+      </div>
+    </div>
+    <div class="cv-body" id="cvBody"><p class="cv-status">memuat CV…</p></div>
+  </div>
+</div>
+
 <script>
-window.EMAIL_ENC = { key: 'Qee19OeFTG7edjHu8o4WiT+ylbcL9GTcz74fXcIy6s4=', iv: 'UX9xe5QginKBLSkJ', data: 'uODqwXmdft6WvLPB0cvP/FhkLyWy/KHzGN55DtGtlx467pWkKg==' };
+window.EMAIL_ENC = { key: 'RNoDggRV3wa2p0f9s+c9fmQV1MqBAWmLVsQ/PVgvKl0=', iv: '4NAtOnZRKsGGOWeP', data: 'DFtntTxkOc/viQd4eiPD2WxvZZzKrYBCcAVM6/1kI4uGWjIthg==' };
+window.CV_ENC = { key: 'YM/0LjlWU2wxmCnAlSe//juBz1qq+dWBsZCt3OYbCU4=', iv: 'HnsDSgEeo8YuNkbq', data: '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' };
 (function(){
   /* nav toggle (mobile) */
   var navToggle = document.getElementById('navToggle');
@@ -602,13 +659,16 @@ window.EMAIL_ENC = { key: 'Qee19OeFTG7edjHu8o4WiT+ylbcL9GTcz74fXcIy6s4=', iv: 'U
     for(var i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
     return buf.buffer;
   }
+  async function decrypt(enc){
+    var key = await crypto.subtle.importKey('raw', b64ToBuf(enc.key), 'AES-GCM', false, ['decrypt']);
+    var plainBuf = await crypto.subtle.decrypt({ name:'AES-GCM', iv: b64ToBuf(enc.iv) }, key, b64ToBuf(enc.data));
+    return new TextDecoder().decode(plainBuf);
+  }
   async function revealEmail(){
     var el = document.getElementById('emailLink');
     if(!el || !window.EMAIL_ENC || !window.crypto || !window.crypto.subtle) return;
     try{
-      var key = await crypto.subtle.importKey('raw', b64ToBuf(EMAIL_ENC.key), 'AES-GCM', false, ['decrypt']);
-      var plainBuf = await crypto.subtle.decrypt({ name:'AES-GCM', iv: b64ToBuf(EMAIL_ENC.iv) }, key, b64ToBuf(EMAIL_ENC.data));
-      var email = new TextDecoder().decode(plainBuf);
+      var email = await decrypt(EMAIL_ENC);
       el.href = 'mailto:' + email;
       el.textContent = email;
     } catch(e){
@@ -616,6 +676,53 @@ window.EMAIL_ENC = { key: 'Qee19OeFTG7edjHu8o4WiT+ylbcL9GTcz74fXcIy6s4=', iv: 'U
     }
   }
   revealEmail();
+
+  /* ---------------- CV modal (decrypted on open only, so crawlers never see it) ---------------- */
+  var cvModal = document.getElementById('cvModal');
+  var cvBody = document.getElementById('cvBody');
+  var cvOpenBtn = document.getElementById('cvOpen');
+  var cvClose = document.getElementById('cvClose');
+  var cvPrint = document.getElementById('cvPrint');
+  var cvLoaded = false;
+  var docTitle = document.title;
+
+  async function loadCv(){
+    if(cvLoaded) return;
+    try{
+      cvBody.innerHTML = await decrypt(CV_ENC);
+      cvLoaded = true;
+      cvPrint.disabled = false;
+    } catch(e){
+      cvBody.innerHTML = '<p class="cv-status">gagal memuat CV — hubungi lewat email/LinkedIn.</p>';
+    }
+  }
+  function openCv(){
+    cvModal.hidden = false;
+    document.body.classList.add('cv-open');
+    cvClose.focus();
+    document.addEventListener('keydown', onCvKeydown);
+    loadCv();
+  }
+  function closeCv(){
+    cvModal.hidden = true;
+    document.body.classList.remove('cv-open');
+    document.removeEventListener('keydown', onCvKeydown);
+    cvOpenBtn.focus();
+  }
+  function onCvKeydown(e){
+    if(e.key === 'Escape') closeCv();
+  }
+  cvOpenBtn.addEventListener('click', openCv);
+  cvClose.addEventListener('click', closeCv);
+  cvModal.addEventListener('click', function(e){
+    if(e.target === cvModal) closeCv();
+  });
+  cvPrint.addEventListener('click', function(){
+    // title becomes the default PDF filename in the print dialog
+    document.title = 'CV - Reza Maulana';
+    window.print();
+    document.title = docTitle;
+  });
 })();
 </script>
 </body>

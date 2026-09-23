@@ -132,6 +132,47 @@
   .lightbox-close{position:absolute;top:-2.5rem;right:0;background:none;border:1px solid var(--border);color:var(--text);width:2.2rem;height:2.2rem;border-radius:4px;font-size:1rem;line-height:1}
   .lightbox-close:hover{border-color:var(--amber)}
 
+  /* ---------- CV modal ---------- */
+  .cv-modal{position:fixed;inset:0;z-index:100;background:rgba(4,5,6,.92);display:flex;justify-content:center;padding:1rem .5rem;overflow-y:auto;overscroll-behavior:contain}
+  .cv-modal[hidden]{display:none}
+  .cv-panel{width:100%;min-width:0;max-width:820px;margin:auto 0}
+  .cv-toolbar{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:.75rem}
+  .cv-toolbar .c{color:var(--muted);font-size:.78rem}
+  .cv-toolbar .actions{display:flex;gap:.5rem}
+  .cv-toolbar button{font-family:var(--mono);cursor:pointer}
+  .cv-close{background:none;border:1px solid var(--border);color:var(--text);width:2.4rem;height:2.4rem;border-radius:4px;font-size:1rem;line-height:1}
+  .cv-close:hover{border-color:var(--amber)}
+  .cv-status{color:var(--muted);font-size:.85rem;padding:2rem 0;text-align:center}
+  .cv-body{border-radius:6px;overflow:hidden}
+  body.cv-open{overflow:hidden}
+  @media (min-width:641px){.cv-modal{padding:2rem 1.25rem}}
+  /*BUILD:CV_STYLE_START*/
+  .cv-doc{overflow-wrap:anywhere;background:#fff;color:#1a1a1a;font-family:Arial,Helvetica,sans-serif;font-size:10.5pt;line-height:1.45;padding:1.5rem 1.25rem}
+  .cv-doc h1{font-size:20pt;margin:0;line-height:1.2;color:#111}
+  .cv-doc .cv-headline{font-size:11.5pt;font-weight:700;margin:.15rem 0 .4rem;color:#333}
+  .cv-doc .cv-contact{font-size:9.5pt;color:#333}
+  .cv-doc h2{break-after:avoid;font-size:11pt;text-transform:uppercase;letter-spacing:.06em;margin:1.1rem 0 .45rem;padding-bottom:.2rem;border-bottom:1px solid #999;color:#111}
+  .cv-doc h3{font-size:10.5pt;margin:0;color:#111}
+  .cv-doc p{margin:0}
+  .cv-doc ul{margin:.3rem 0 0;padding-left:1.15rem;list-style:disc}
+  .cv-doc .cv-skills{list-style:none;padding-left:0}
+  .cv-doc .cv-meta{font-size:9.5pt;color:#444}
+  .cv-doc .cv-entry{break-inside:avoid}
+  .cv-doc .cv-entry + .cv-entry{margin-top:.7rem}
+  .cv-doc a{color:#1a1a1a;text-decoration:none}
+  @media (min-width:641px){.cv-doc{padding:2.5rem 3rem}}
+  body.cv-standalone{margin:0}
+  body.cv-standalone .cv-doc{padding:0}
+  @page{size:A4;margin:14mm 16mm}
+  /*BUILD:CV_STYLE_END*/
+  @media print{
+    body.cv-open > *:not(#cvModal){display:none !important}
+    body.cv-open{background:#fff}
+    body.cv-open .cv-modal{position:static;display:block;padding:0;background:none;overflow:visible}
+    body.cv-open .cv-toolbar{display:none}
+    body.cv-open .cv-doc{padding:0}
+  }
+
   .bar-row{display:flex;align-items:center;gap:.75rem;margin-top:.55rem}
   .bar-row .lbl{min-width:16ch;color:var(--muted);font-size:.82rem}
 
@@ -161,7 +202,9 @@
     display:inline-block;font-family:var(--mono);font-size:.8rem;padding:.65rem 1.1rem;border-radius:4px;
     text-decoration:none;border:1px solid var(--border);color:var(--text);transition:border-color .15s ease,background .15s ease;
   }
+  button.btn{background:none;cursor:pointer}
   .btn.primary{background:var(--amber);border-color:var(--amber);color:#14100a;font-weight:700}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
   .btn.primary:hover{background:#f0b25c}
   .btn:not(.primary):hover{border-color:var(--amber)}
 
@@ -205,7 +248,7 @@
         <div class="out" style="display:flex;gap:.85rem;flex-wrap:wrap;border-left:none;padding-left:0;margin-left:0">
           <a class="btn primary" href="#projects">Lihat Proyek</a>
           <a class="btn" href="#contact">Kontak Saya</a>
-          <a class="btn" href="https://drive.google.com/file/d/1HyMRhkJUaqJuGiMcYGLxuYExbYNLh38X/view" target="_blank" rel="noopener">Unduh CV ↗</a>
+          <button class="btn" id="cvOpen" type="button" aria-haspopup="dialog" aria-controls="cvModal">Lihat CV</button>
         </div>
       </div>
 
@@ -294,6 +337,19 @@
     <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Tutup">✕</button>
     <img id="lightboxImg" src="" alt="">
     <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
+</div>
+
+<div class="cv-modal" id="cvModal" role="dialog" aria-modal="true" aria-labelledby="cvTitle" data-nosnippet hidden>
+  <div class="cv-panel">
+    <div class="cv-toolbar">
+      <span class="c" id="cvTitle">cv — reza maulana</span>
+      <div class="actions">
+        <button class="btn primary" id="cvPrint" type="button" disabled>Simpan PDF</button>
+        <button class="cv-close" id="cvClose" type="button" aria-label="Tutup CV">✕</button>
+      </div>
+    </div>
+    <div class="cv-body" id="cvBody"><p class="cv-status">memuat CV…</p></div>
   </div>
 </div>
 
@@ -540,13 +596,16 @@
     for(var i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
     return buf.buffer;
   }
+  async function decrypt(enc){
+    var key = await crypto.subtle.importKey('raw', b64ToBuf(enc.key), 'AES-GCM', false, ['decrypt']);
+    var plainBuf = await crypto.subtle.decrypt({ name:'AES-GCM', iv: b64ToBuf(enc.iv) }, key, b64ToBuf(enc.data));
+    return new TextDecoder().decode(plainBuf);
+  }
   async function revealEmail(){
     var el = document.getElementById('emailLink');
     if(!el || !window.EMAIL_ENC || !window.crypto || !window.crypto.subtle) return;
     try{
-      var key = await crypto.subtle.importKey('raw', b64ToBuf(EMAIL_ENC.key), 'AES-GCM', false, ['decrypt']);
-      var plainBuf = await crypto.subtle.decrypt({ name:'AES-GCM', iv: b64ToBuf(EMAIL_ENC.iv) }, key, b64ToBuf(EMAIL_ENC.data));
-      var email = new TextDecoder().decode(plainBuf);
+      var email = await decrypt(EMAIL_ENC);
       el.href = 'mailto:' + email;
       el.textContent = email;
     } catch(e){
@@ -554,6 +613,53 @@
     }
   }
   revealEmail();
+
+  /* ---------------- CV modal (decrypted on open only, so crawlers never see it) ---------------- */
+  var cvModal = document.getElementById('cvModal');
+  var cvBody = document.getElementById('cvBody');
+  var cvOpenBtn = document.getElementById('cvOpen');
+  var cvClose = document.getElementById('cvClose');
+  var cvPrint = document.getElementById('cvPrint');
+  var cvLoaded = false;
+  var docTitle = document.title;
+
+  async function loadCv(){
+    if(cvLoaded) return;
+    try{
+      cvBody.innerHTML = await decrypt(CV_ENC);
+      cvLoaded = true;
+      cvPrint.disabled = false;
+    } catch(e){
+      cvBody.innerHTML = '<p class="cv-status">gagal memuat CV — hubungi lewat email/LinkedIn.</p>';
+    }
+  }
+  function openCv(){
+    cvModal.hidden = false;
+    document.body.classList.add('cv-open');
+    cvClose.focus();
+    document.addEventListener('keydown', onCvKeydown);
+    loadCv();
+  }
+  function closeCv(){
+    cvModal.hidden = true;
+    document.body.classList.remove('cv-open');
+    document.removeEventListener('keydown', onCvKeydown);
+    cvOpenBtn.focus();
+  }
+  function onCvKeydown(e){
+    if(e.key === 'Escape') closeCv();
+  }
+  cvOpenBtn.addEventListener('click', openCv);
+  cvClose.addEventListener('click', closeCv);
+  cvModal.addEventListener('click', function(e){
+    if(e.target === cvModal) closeCv();
+  });
+  cvPrint.addEventListener('click', function(){
+    // title becomes the default PDF filename in the print dialog
+    document.title = 'CV - Reza Maulana';
+    window.print();
+    document.title = docTitle;
+  });
 })();
 </script>
 </body>

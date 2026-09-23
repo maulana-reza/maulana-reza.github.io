@@ -5,3 +5,4 @@ node_modules/
 # content source contains the plaintext contact email — index.html (built output,
 # email encrypted) is what ships; keep the plaintext source local-only.
 /data/content.json
+/data/cv.json
