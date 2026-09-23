@@ -147,16 +147,19 @@
   body.cv-open{overflow:hidden}
   @media (min-width:641px){.cv-modal{padding:2rem 1.25rem}}
   /*BUILD:CV_STYLE_START*/
-  .cv-doc{overflow-wrap:anywhere;background:#fff;color:#1a1a1a;font-family:Arial,Helvetica,sans-serif;font-size:10.5pt;line-height:1.45;padding:1.5rem 1.25rem}
-  .cv-doc h1{font-size:20pt;margin:0;line-height:1.2;color:#111}
-  .cv-doc .cv-headline{font-size:11.5pt;font-weight:700;margin:.15rem 0 .4rem;color:#333}
+  /* mono for identity + structure (matches the site), sans for body text so recruiters and
+     ATS parsers read long bullets easily; both are system fonts, embedded when printed */
+  .cv-doc{--cv-mono:ui-monospace,"Cascadia Mono","SFMono-Regular",Consolas,monospace;--cv-sans:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;overflow-wrap:anywhere;background:#fff;color:#1a1a1a;font-family:var(--cv-sans);font-size:10.5pt;line-height:1.5;padding:1.5rem 1.25rem}
+  .cv-doc h1{font-family:var(--cv-mono);font-size:21pt;font-weight:700;letter-spacing:-.01em;margin:0;line-height:1.15;color:#111}
+  .cv-doc .cv-headline{font-family:var(--cv-mono);font-size:11pt;font-weight:600;margin:.2rem 0 .45rem;color:#8a5a12}
   .cv-doc .cv-contact{font-size:9.5pt;color:#333}
-  .cv-doc h2{break-after:avoid;font-size:11pt;text-transform:uppercase;letter-spacing:.06em;margin:1.1rem 0 .45rem;padding-bottom:.2rem;border-bottom:1px solid #999;color:#111}
-  .cv-doc h3{font-size:10.5pt;margin:0;color:#111}
+  .cv-doc h2{font-family:var(--cv-mono);break-after:avoid;font-size:10.5pt;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin:1.15rem 0 .5rem;padding-bottom:.2rem;border-bottom:1.5px solid #c98a2b;color:#111}
+  .cv-doc h3{font-size:10.5pt;font-weight:700;margin:0;color:#111}
+  .cv-doc strong{font-weight:600}
   .cv-doc p{margin:0}
   .cv-doc ul{margin:.3rem 0 0;padding-left:1.15rem;list-style:disc}
   .cv-doc .cv-skills{list-style:none;padding-left:0}
-  .cv-doc .cv-meta{font-size:9.5pt;color:#444}
+  .cv-doc .cv-meta{font-family:var(--cv-mono);font-size:8.75pt;color:#555;margin-top:.05rem}
   .cv-doc .cv-entry{break-inside:avoid}
   .cv-doc .cv-entry + .cv-entry{margin-top:.7rem}
   .cv-doc a{color:#1a1a1a;text-decoration:none}
